@@ -18,7 +18,7 @@
  * (CacheFirst), not precached, so install stays fast.
  */
 
-const CB_TOKEN = '964f61d9'; // bust.sh rewrites this value on each build
+const CB_TOKEN = '59a52746'; // bust.sh rewrites this value on each build
 const CACHE_NAME = `the-path-${CB_TOKEN}`;
 
 // App shell: the three routes, the offline fallback, core CSS, the homepage JS,

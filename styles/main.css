@@ -108,14 +108,18 @@ section:first-of-type { border-top: 0; }
   letter-spacing: 0.02em; color: var(--ink-soft); opacity: 0.85;
 }
 
-/* ---- Landing centerpiece: "The Path" map dominates the first screen ---- */
-#path-map.is-landing {
+/* ---- Landing centerpiece: "The Path" map dominates the first screen ----
+   The landing panel is #panel-the-path (it carries .is-landing). The section
+   rhythm rule (`section { padding-block: var(--space-5) }`, 5rem) was leaving a
+   large dead gap between the sticky tab nav and the eyebrow/title; this override
+   tightens the TOP padding to ~none while keeping generous space BELOW the map. */
+#panel-the-path.is-landing {
   border-top: 0;
-  padding-block: var(--space-2) var(--space-5);
+  padding-block: var(--space-1) var(--space-5);
   min-height: 78vh;                 /* comfortably owns the first screen */
   display: flex; flex-direction: column;
 }
-.section-head--center { text-align: center; margin-bottom: var(--space-2); }
+.section-head--center { text-align: center; margin-top: 0; margin-bottom: var(--space-2); }
 .section-head--center .eyebrow { margin-bottom: 0.2rem; }
 .path-title {
   font-family: var(--font-latin-serif); color: var(--maroon-deep);
@@ -164,7 +168,7 @@ section:first-of-type { border-top: 0; }
 .cmap-node--link { cursor: pointer; }
 
 @media (max-width: 639px) {
-  #path-map.is-landing { min-height: 0; padding-block: var(--space-2) var(--space-4); }
+  #panel-the-path.is-landing { min-height: 0; padding-block: var(--space-1) var(--space-4); }
   .cmap-figure .cmap { min-height: 0; }
 }
 
@@ -358,6 +362,7 @@ footer p { max-width: 70ch; }
 /* Group container: light inset, thin warm rule, small-caps head — "part-of"
    shown by containment, so NO arrows touch the chips inside. */
 .cmap-group {
+  position: relative;                 /* anchor for the absolutely-placed head */
   background: var(--paper-sink); border: 1px solid var(--rule);
   border-radius: var(--radius); padding: 0.55rem 0.7rem;
   display: flex; flex-direction: column; gap: 0.4rem;
@@ -374,13 +379,16 @@ footer p { max-width: 70ch; }
 .cmap-chip .cmap-node-label { font-size: 0.8rem; font-family: var(--font-latin-ui); font-weight: 600; }
 .cmap-chip .cmap-node-role { font-size: 0.66rem; }
 /* The group HEAD node is the arrow anchor for the group's cross-stage edges.
-   It must occupy space (for getBoundingClientRect) but read as the title row,
-   so render it inline-quiet rather than as a second card. */
+   It is a BARE, invisible element — the visible title is .cmap-group-name. It is
+   taken OUT of flex flow (position:absolute) so it adds neither a second flex gap
+   nor any min-height between the title row and the chips: that doubled gap was the
+   mobile "dead space" between a group's title and its chips. Its rect still sits
+   over the title (measurable via getBoundingClientRect) so the desktop arrow
+   endpoints are unchanged; on narrow screens the arrows are hidden anyway. */
 .cmap-group-head {
-  border: 0; background: transparent; padding: 0; min-width: 0;
-  /* Bare anchor (no visible text — the group-name already prints the label).
-     It only needs a measurable rect near the group's top for arrow endpoints. */
-  min-height: 2px; margin: -0.35rem 0 0; cursor: default;
+  position: absolute; top: 0.55rem; left: 0.7rem; right: 0.7rem;
+  border: 0; background: transparent; padding: 0; margin: 0; min-width: 0;
+  min-height: 2px; pointer-events: none; cursor: default;
 }
 .cmap-group-head .cmap-node-label { font-family: var(--font-latin-serif); font-weight: 600; font-size: var(--step-sm); color: var(--maroon-deep); }
 .cmap-group-head .cmap-node-role { display: none; }   /* the group-sub already carries the gloss */
@@ -498,6 +506,60 @@ footer p { max-width: 70ch; }
 .term-popover .syllables { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: var(--space-2); }
 .term-popover .tp-flag { margin: 0 0 var(--space-1); font-size: var(--step-xs); color: var(--warn); }
 .term-popover .tp-link { font-size: var(--step-sm); }
+
+/* ============================================================
+   CENTERED TERM MODAL (lightbox) — Path concept-map node clicks
+   A fixed full-viewport scrim + a centered, dismiss-only card. Uses the same
+   design tokens as the popover, so it is dark-mode aware for free.
+   ============================================================ */
+.term-modal-backdrop {
+  position: fixed; inset: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--space-2);
+  background: color-mix(in oklab, var(--ink) 55%, transparent);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  animation: tm-fade 0.18s ease both;
+}
+.term-modal-backdrop[hidden] { display: none; }
+/* Lock background scroll while the modal owns the screen. */
+html.term-modal-open, html.term-modal-open body { overflow: hidden; }
+
+.term-modal {
+  position: relative;
+  width: min(92vw, 28rem); max-height: 88vh; overflow-y: auto;
+  background: var(--paper); border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 14px 50px color-mix(in oklab, var(--ink) 38%, transparent);
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  font-family: var(--font-latin-ui); text-align: center;
+  animation: tm-pop 0.18s ease both;
+}
+.term-modal:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+.term-modal .tm-close {
+  position: absolute; top: 0.4rem; right: 0.4rem;
+  width: 2rem; height: 2rem; line-height: 1; font-size: 1.5rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 0; border-radius: var(--radius);
+  color: var(--ink-soft); cursor: pointer;
+}
+.term-modal .tm-close:hover { color: var(--maroon); background: var(--paper-sink); }
+.term-modal .tm-close:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+.term-modal .tm-tib { font-family: var(--font-tib-display); font-size: clamp(3rem, 14vw, 4.6rem); line-height: 1.5; color: var(--maroon); }
+.term-modal .tm-head { font-family: var(--font-latin-serif); font-weight: 600; font-size: clamp(1.6rem, 7vw, 2.2rem); line-height: 1.15; color: var(--maroon); }
+.term-modal .tm-meta { display: flex; gap: 0.6rem; align-items: baseline; flex-wrap: wrap; justify-content: center; margin: 0.3rem 0 0.5rem; }
+.term-modal .tm-meta .phonetic { font-family: var(--font-latin-serif); font-style: italic; font-size: var(--step-md); color: var(--ink); }
+.term-modal .tm-meta .sanskrit { font-family: var(--font-latin-serif); font-style: italic; font-size: var(--step-md); color: var(--ink); }
+.term-modal .tm-meta .wylie { font-family: var(--font-latin-ui); font-size: var(--step-sm); color: var(--ink-soft); }
+.term-modal .tm-gloss { margin: 0 0 var(--space-2); font-size: var(--step-sm); color: var(--ink); text-align: left; }
+.term-modal .syllables { display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-bottom: var(--space-2); }
+.term-modal .tm-flag { margin: 0 0 var(--space-1); font-size: var(--step-xs); color: var(--warn); }
+.term-modal .tm-link { display: inline-block; font-size: var(--step-sm); margin-top: var(--space-1); }
+
+@keyframes tm-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tm-pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .term-modal-backdrop, .term-modal { animation: none; }
+}
 
 /* Colored syllable chips (tsheg-split). c0..c4 cycle warm hues. */
 .syllable.c0 { background: color-mix(in oklab, var(--saffron) 26%, var(--paper)); }

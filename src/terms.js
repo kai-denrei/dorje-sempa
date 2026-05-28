@@ -227,6 +227,136 @@ export function mountTermCards() {
   window.addEventListener('scroll', () => { if (activeAnchor) positionPopover(activeAnchor); }, { passive: true });
 }
 
+/* ---------- Centered term modal (lightbox) ----------
+   A persistent, dismiss-only term card used by the Path concept-map nodes (and
+   reusable elsewhere). Unlike the hover popover, this stays open until the user
+   dismisses it (Esc, backdrop click, or the × button). It is a focus-trapping
+   role="dialog" (aria-modal), returns focus to the triggering element on close,
+   and respects prefers-reduced-motion (the fade is gated in CSS).
+
+   DOM:  .term-modal-backdrop  >  .term-modal[role=dialog]  >  ×  +  body  */
+let modalBackdrop = null;     // the fixed full-viewport scrim (also the dialog host)
+let modalCard = null;         // the centered .term-modal
+let modalTrigger = null;      // element focus returns to on close
+let modalKeydownBound = false;
+
+function buildTermModal() {
+  if (modalBackdrop) return modalBackdrop;
+  modalBackdrop = document.createElement('div');
+  modalBackdrop.className = 'term-modal-backdrop';
+  modalBackdrop.hidden = true;
+
+  modalCard = document.createElement('div');
+  modalCard.className = 'term-modal';
+  modalCard.setAttribute('role', 'dialog');
+  modalCard.setAttribute('aria-modal', 'true');
+  modalCard.tabIndex = -1;
+  modalBackdrop.appendChild(modalCard);
+
+  document.body.appendChild(modalBackdrop);
+
+  // Backdrop click (outside the card) dismisses; clicks inside the card don't.
+  modalBackdrop.addEventListener('click', (e) => {
+    if (e.target === modalBackdrop) closeTermModal();
+  });
+
+  // One document-level key handler, only active while the modal is open: Esc to
+  // close, Tab to keep focus trapped within the dialog.
+  if (!modalKeydownBound) {
+    document.addEventListener('keydown', (e) => {
+      if (modalBackdrop.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeTermModal(); return; }
+      if (e.key === 'Tab') trapModalTab(e);
+    });
+    modalKeydownBound = true;
+  }
+  return modalBackdrop;
+}
+
+function modalFocusables() {
+  return Array.from(modalCard.querySelectorAll(
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  )).filter((el) => el.offsetParent !== null || el === modalCard);
+}
+
+function trapModalTab(e) {
+  const f = modalFocusables();
+  if (!f.length) { e.preventDefault(); modalCard.focus(); return; }
+  const first = f[0], last = f[f.length - 1];
+  const active = document.activeElement;
+  if (e.shiftKey) {
+    if (active === first || active === modalCard) { e.preventDefault(); last.focus(); }
+  } else {
+    if (active === last) { e.preventDefault(); first.focus(); }
+  }
+}
+
+function fillTermModal(t) {
+  buildTermModal();
+  const labelId = 'term-modal-name';
+  modalCard.setAttribute('aria-labelledby', labelId);
+
+  let body;
+  if (hasTibetan(t)) {
+    const chips = splitSyllables(t.tibetan)
+      .map((s, i) => `<span class="syllable c${i % 5}" lang="bo">${escapeHtml(s)}</span>`)
+      .join('');
+    const meta = [`<span class="phonetic" id="${labelId}">${escapeHtml(t.phonetic)}</span>`];
+    if (t.wylie) meta.push(`<span class="wylie">${escapeHtml(t.wylie)}</span>`);
+    if (t.sanskrit) meta.push(`<span class="sanskrit">${escapeHtml(t.sanskrit)}</span>`);
+    body = `
+      <div class="tm-tib" lang="bo">${escapeHtml(t.tibetan)}</div>
+      <div class="tm-meta">${meta.join('')}</div>
+      <p class="tm-gloss">${glossHtml(t.gloss)}</p>
+      <div class="syllables" aria-label="Syllable breakdown">${chips}</div>
+      ${t.tibetanVerified ? '' : '<p class="tm-flag">Tibetan unverified — Wylie is authoritative.</p>'}
+      <a class="tm-link" href="/dorje-sempa/glossary/#${t.id}">View in glossary &rarr;</a>`;
+  } else {
+    const meta = [];
+    if (t.sanskrit) meta.push(`<span class="sanskrit">${escapeHtml(t.sanskrit)}</span>`);
+    if (t.wylie) meta.push(`<span class="wylie">${escapeHtml(t.wylie)}</span>`);
+    body = `
+      <div class="tm-head" id="${labelId}">${escapeHtml(t.phonetic)}</div>
+      ${meta.length ? `<div class="tm-meta">${meta.join('')}</div>` : ''}
+      <p class="tm-gloss">${glossHtml(t.gloss)}</p>
+      <a class="tm-link" href="/dorje-sempa/glossary/#${t.id}">View in glossary &rarr;</a>`;
+  }
+
+  modalCard.innerHTML =
+    `<button type="button" class="tm-close" aria-label="Close">&times;</button>${body}`;
+  modalCard.querySelector('.tm-close').addEventListener('click', closeTermModal);
+}
+
+/* Open the centered modal for a term id. `trigger` is the element to restore
+   focus to on close (e.g. the concept-map node that was clicked). */
+export function showTermModal(id, trigger) {
+  const t = TERMS.get(id);
+  if (!t) return false;
+  hideCard();                 // dismiss any lingering hover popover behind the modal
+  buildTermModal();
+  modalTrigger = trigger || (document.activeElement instanceof HTMLElement ? document.activeElement : null);
+  fillTermModal(t);
+  modalBackdrop.hidden = false;
+  document.documentElement.classList.add('term-modal-open');
+  // Move focus into the dialog (the close button is a sensible first stop).
+  const focusTarget = modalCard.querySelector('.tm-close') || modalCard;
+  focusTarget.focus();
+  return true;
+}
+
+export function closeTermModal() {
+  if (!modalBackdrop || modalBackdrop.hidden) return;
+  modalBackdrop.hidden = true;
+  document.documentElement.classList.remove('term-modal-open');
+  if (modalTrigger && typeof modalTrigger.focus === 'function') modalTrigger.focus();
+  modalTrigger = null;
+}
+
+/* Idempotent setup hook (builds the singleton DOM). Safe to call once at boot. */
+export function mountTermModal() {
+  buildTermModal();
+}
+
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));

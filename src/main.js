@@ -11,7 +11,7 @@
    viz mounted into it would lay out at 0px. We therefore (re)draw a panel's
    viz the first time its tab is shown, and resize/redraw on every later show. */
 
-import { loadTerms, mountTermCards } from './terms.js';
+import { loadTerms, mountTermCards, mountTermModal } from './terms.js';
 import { renderLineage, renderControversy, renderConceptMap, redrawConceptMap, watchResize } from './viz.js';
 import { mountTabs } from './tabs.js';
 import { mountPhowaWalk } from './phowa.js';
@@ -83,6 +83,7 @@ async function init() {
   await buildConceptMap();
   if (termsReady) {
     mountTermCards();
+    mountTermModal();     // centered, dismiss-only term card (Path-viz node clicks)
   }
   initLineageViz();
   // Mount the tabs LAST so onTabShow can safely (re)draw viz that now exist.

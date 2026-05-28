@@ -5,7 +5,7 @@
    - honor prefers-reduced-motion (no transitions when set);
    - degrade to a vertical/stacked layout on narrow screens. */
 
-import { getTerm, hasTibetan, splitSyllables } from './terms.js';
+import { getTerm, hasTibetan, splitSyllables, showTermModal } from './terms.js';
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -322,23 +322,24 @@ function buildConceptDom(mount, data) {
     el.tabIndex = 0;
     if (n.glossary) {
       el.setAttribute('data-term', n.glossary);
-      // Centerpiece behavior: each glossary-linked node is also a deep link into
-      // the glossary page (the highlight/flash already lives there). The hover/
-      // focus popover (terms.js, delegated on mouseover/focusin) is preserved —
-      // we only intercept click + Enter/Space so the primary action is "open the
-      // glossary entry," not "toggle the popover." stopPropagation keeps
-      // terms.js's document-level click from also firing; stopImmediatePropagation
-      // on keydown keeps its same-element Enter/Space handler from firing.
-      el.setAttribute('role', 'link');
+      // Centerpiece behavior: clicking (or Enter/Space on) a node opens that
+      // term's card as a CENTERED, dismiss-only modal (terms.js showTermModal) —
+      // it no longer navigates to the glossary route (the glossary link lives
+      // INSIDE the modal). The hover/focus popover (terms.js, delegated on
+      // mouseover/focusin) is preserved for pointer hover. stopPropagation keeps
+      // terms.js's document-level click from also firing (which would otherwise
+      // toggle the hover popover); stopImmediatePropagation on keydown keeps its
+      // same-element Enter/Space handler from also firing.
+      el.setAttribute('role', 'button');
       el.classList.add('cmap-node--link');
+      el.setAttribute('aria-haspopup', 'dialog');
       el.setAttribute('aria-label',
-        n.label + (n.role ? ' — ' + n.role : '') + '. Open in the glossary.');
-      const dest = '/dorje-sempa/glossary/#' + n.glossary;
-      const go = () => { window.location.href = dest; };
-      el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); go(); });
+        n.label + (n.role ? ' — ' + n.role : '') + '. Open term card.');
+      const open = () => { showTermModal(n.glossary, el); };
+      el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); open(); });
       el.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
-          e.preventDefault(); e.stopImmediatePropagation(); go();
+          e.preventDefault(); e.stopImmediatePropagation(); open();
         }
       });
     }
