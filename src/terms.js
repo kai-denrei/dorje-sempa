@@ -16,7 +16,7 @@ let loaded = null;                 // promise guard
 export async function loadTerms() {
   if (loaded) return loaded;
   loaded = (async () => {
-    const res = await fetch('/data/glossary.json', { cache: 'no-store' });
+    const res = await fetch('/dorje-sempa/data/glossary.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('glossary.json HTTP ' + res.status);
     const data = await res.json();
     (data.terms || []).forEach((t) => TERMS.set(t.id, t));
@@ -126,7 +126,7 @@ function fillPopover(t) {
       <p class="tp-gloss">${glossHtml(t.gloss)}</p>
       <div class="syllables" aria-label="Syllable breakdown">${chips}</div>
       ${t.tibetanVerified ? '' : '<p class="tp-flag">Tibetan unverified — Wylie is authoritative.</p>'}
-      <a class="tp-link" href="/glossary/#${t.id}">Open in the glossary &rarr;</a>`;
+      <a class="tp-link" href="/dorje-sempa/glossary/#${t.id}">Open in the glossary &rarr;</a>`;
   } else {
     // Concept card: headword large in the Latin display face, Sanskrit (IAST,
     // italic) if present, then the gloss. No glyph, no chips, no verify flag.
@@ -138,7 +138,7 @@ function fillPopover(t) {
       <div class="tp-head">${escapeHtml(t.phonetic)}</div>
       ${meta.length ? `<div class="tp-meta">${meta.join('')}</div>` : ''}
       <p class="tp-gloss">${glossHtml(t.gloss)}</p>
-      <a class="tp-link" href="/glossary/#${t.id}">Open in the glossary &rarr;</a>`;
+      <a class="tp-link" href="/dorje-sempa/glossary/#${t.id}">Open in the glossary &rarr;</a>`;
   }
 }
 

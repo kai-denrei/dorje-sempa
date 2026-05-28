@@ -333,7 +333,7 @@ function buildConceptDom(mount, data) {
       el.classList.add('cmap-node--link');
       el.setAttribute('aria-label',
         n.label + (n.role ? ' — ' + n.role : '') + '. Open in the glossary.');
-      const dest = '/glossary/#' + n.glossary;
+      const dest = '/dorje-sempa/glossary/#' + n.glossary;
       const go = () => { window.location.href = dest; };
       el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); go(); });
       el.addEventListener('keydown', (e) => {

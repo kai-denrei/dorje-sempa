@@ -43,7 +43,7 @@ async function buildConceptMap() {
   const mount = document.getElementById('concept-map');
   if (!mount) return;
   try {
-    const res = await fetch('/data/concept-map.json', { cache: 'no-store' });
+    const res = await fetch('/dorje-sempa/data/concept-map.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('concept-map.json HTTP ' + res.status);
     const data = await res.json();
     renderConceptMap('concept-map', data);

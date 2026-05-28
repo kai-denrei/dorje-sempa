@@ -79,7 +79,7 @@
 
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js', { scope: '/' })
+      .register('/dorje-sempa/sw.js', { scope: '/dorje-sempa/' })
       .then((reg) => {
         // Already waiting (installed in a previous visit)?
         if (reg.waiting && navigator.serviceWorker.controller) {

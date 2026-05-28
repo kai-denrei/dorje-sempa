@@ -84,7 +84,7 @@ async function main() {
   const grid = document.querySelector('#term-grid');
   const status = document.querySelector('#verify-status');
   try {
-    const res = await fetch('/data/glossary.json', { cache: 'no-store' });
+    const res = await fetch('/dorje-sempa/data/glossary.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     const terms = data.terms || [];
@@ -105,7 +105,7 @@ async function main() {
   } catch (e) {
     status.className = 'verify-summary warn';
     status.textContent =
-      'Failed to load /data/glossary.json — serve from the project root (e.g. python3 -m http.server). ' + e;
+      'Failed to load /dorje-sempa/data/glossary.json — serve from the project root (e.g. python3 -m http.server). ' + e;
   }
 }
 

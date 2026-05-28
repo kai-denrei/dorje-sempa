@@ -18,28 +18,28 @@
  * (CacheFirst), not precached, so install stays fast.
  */
 
-const CB_TOKEN = 'e8e6cea4'; // bust.sh rewrites this value on each build
+const CB_TOKEN = '964f61d9'; // bust.sh rewrites this value on each build
 const CACHE_NAME = `the-path-${CB_TOKEN}`;
 
 // App shell: the three routes, the offline fallback, core CSS, the homepage JS,
 // and the two data files the homepage + glossary read. Canonical URLs only.
 const PRECACHE_URLS = [
-  '/',
-  '/glossary/',
-  '/test.html',
-  '/offline.html',
-  '/styles/tokens.css',
-  '/styles/typography.css',
-  '/styles/main.css',
-  '/src/main.js',
-  '/data/glossary.json',
-  '/data/concept-map.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/manifest.webmanifest',
+  '/dorje-sempa/',
+  '/dorje-sempa/glossary/',
+  '/dorje-sempa/test.html',
+  '/dorje-sempa/offline.html',
+  '/dorje-sempa/styles/tokens.css',
+  '/dorje-sempa/styles/typography.css',
+  '/dorje-sempa/styles/main.css',
+  '/dorje-sempa/src/main.js',
+  '/dorje-sempa/data/glossary.json',
+  '/dorje-sempa/data/concept-map.json',
+  '/dorje-sempa/icons/icon-192.png',
+  '/dorje-sempa/icons/icon-512.png',
+  '/dorje-sempa/manifest.webmanifest',
 ];
 
-const OFFLINE_URL = '/offline.html';
+const OFFLINE_URL = '/dorje-sempa/offline.html';
 
 // ---- install: precache the app shell, but do NOT auto-activate ----
 // skipWaiting happens only on a SKIP_WAITING message (see update flow in pwa.js),
@@ -108,7 +108,7 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Fonts: CacheFirst (immutable, long-lived).
-  if (url.pathname.startsWith('/fonts/')) {
+  if (url.pathname.startsWith('/dorje-sempa/fonts/')) {
     event.respondWith(cacheFirst(req));
     return;
   }
@@ -135,7 +135,7 @@ async function handleNavigate(event) {
     return fresh;
   } catch (_) {
     // Offline: try the exact page from cache, then the route, then offline.html.
-    const cached = (await cache.match(req)) || (await cache.match('/'));
+    const cached = (await cache.match(req)) || (await cache.match('/dorje-sempa/'));
     if (cached) return cached;
     const offline = await cache.match(OFFLINE_URL);
     if (offline) return offline;
