@@ -1,0 +1,74 @@
+{
+  "_meta": {
+    "title": "How the path fits together",
+    "subtitle": "How the core practices and concepts feed into one another",
+    "source": "handover.md §4.6 (foundation → guru yoga → deity → Mahāmudrā) + diamondway-buddhism.org/buddhist-meditation (calming → insight). Relationships are CURATED for doctrinal accuracy — do NOT add, remove, or invent edges; render exactly the edges listed.",
+    "orientation": "top → bottom = ground → fruition. Vertical position encodes the stage of the path; it is the meaningful axis (this is deliberately NOT a force-directed layout).",
+    "node_ids_link_to": "data/glossary.json `id` (field `glossary`); a node with glossary:null has no glossary entry and is label-only."
+  },
+  "stages": [
+    { "id": "ground",     "label": "The ground",            "note": "what makes the path possible" },
+    { "id": "motivation", "label": "Turning the mind",       "note": "orienting toward practice" },
+    { "id": "foundation", "label": "Foundation — Ngöndro",   "note": "purify & accumulate" },
+    { "id": "engine",     "label": "Calm & insight",         "note": "the meditative engine, running throughout" },
+    { "id": "deity",      "label": "Deity practice",         "note": "identification with enlightened qualities" },
+    { "id": "advanced",   "label": "Advanced yogas",         "note": "lineage inheritance; three-year retreat" },
+    { "id": "fruition",   "label": "Fruition — the View",    "note": "direct recognition of mind" }
+  ],
+  "groups": [
+    { "id": "ngondro-group",  "label": "", "stage": "foundation" },
+    { "id": "sixyogas-group", "label": "advanced; mostly three-year retreat", "stage": "advanced" }
+  ],
+  "nodes": [
+    { "id": "buddha-nature",     "label": "Buddha-nature",        "role": "the innate potential practice uncovers", "stage": "ground",     "glossary": "buddha-nature" },
+
+    { "id": "four-thoughts",     "label": "Four Thoughts",        "role": "turn the mind toward practice",          "stage": "motivation", "glossary": "four-thoughts" },
+    { "id": "three-jewels",      "label": "Three Jewels",         "role": "the objects of refuge",                  "stage": "motivation", "glossary": "three-jewels" },
+    { "id": "bodhicitta",        "label": "Bodhicitta",           "role": "the awakening motivation",               "stage": "motivation", "glossary": "bodhicitta" },
+
+    { "id": "ngondro",           "label": "Ngöndro",              "role": "the four foundational practices",        "stage": "foundation", "glossary": "ngondro", "isGroupHead": "ngondro-group" },
+    { "id": "prostration",       "label": "Refuge & prostrations","role": "purifies pride",                         "stage": "foundation", "glossary": "prostration",      "group": "ngondro-group" },
+    { "id": "vajrasattva",       "label": "Vajrasattva",          "role": "purification (100-syllable mantra)",     "stage": "foundation", "glossary": "vajrasattva",        "group": "ngondro-group" },
+    { "id": "mandala",           "label": "Mandala offerings",    "role": "gathers merit",                          "stage": "foundation", "glossary": "mandala",          "group": "ngondro-group" },
+    { "id": "guru-yoga",         "label": "Guru Yoga",            "role": "in Diamond Way, the 16th Karmapa Meditation", "stage": "foundation", "glossary": "guru-yoga",   "group": "ngondro-group" },
+    { "id": "two-accumulations", "label": "Two Accumulations",    "role": "merit + wisdom",                         "stage": "foundation", "glossary": "two-accumulations" },
+
+    { "id": "shamatha",          "label": "Calm Abiding",             "role": "calming the mind (shinay)",              "stage": "engine",     "glossary": "shamatha" },
+    { "id": "vipashyana",        "label": "Clear Seeing",           "role": "insight (lhaktong)",                     "stage": "engine",     "glossary": "vipashyana" },
+
+    { "id": "wang",              "label": "Initiation",          "role": "authorizes a yidam practice (wang)",     "stage": "deity",      "glossary": "wang" },
+    { "id": "yidam",             "label": "Enlightened Quality",                "role": "deity practice: visualization + mantra", "stage": "deity",      "glossary": "yidam" },
+
+    { "id": "sixyogas",          "label": "Six Yogas of Nāropa",  "role": "advanced; mostly three-year retreat",    "stage": "advanced",   "glossary": null, "isGroupHead": "sixyogas-group" },
+    { "id": "tummo",             "label": "Tummo",                "role": "inner heat",                             "stage": "advanced",   "glossary": "tummo",  "group": "sixyogas-group" },
+    { "id": "gyulu",             "label": "Gyulü",        "role": "gyulü",                                  "stage": "advanced",   "glossary": "gyulu",  "group": "sixyogas-group" },
+    { "id": "milam",             "label": "Milam",           "role": "milam",                                  "stage": "advanced",   "glossary": "milam",  "group": "sixyogas-group" },
+    { "id": "osel",              "label": "Ösel",          "role": "ösel",                                   "stage": "advanced",   "glossary": "osel",   "group": "sixyogas-group" },
+    { "id": "bardo",             "label": "Bardo",           "role": "the intermediate state",                 "stage": "advanced",   "glossary": "bardo",  "group": "sixyogas-group" },
+    { "id": "phowa",             "label": "Phowa",                "role": "transference at death",                  "stage": "advanced",   "glossary": "phowa",  "group": "sixyogas-group" },
+    { "id": "pure-land",         "label": "Pure Bliss",            "role": "Amitābha's Dewachen",                    "stage": "advanced",   "glossary": "pure-land" },
+
+    { "id": "emptiness",         "label": "Emptiness",            "role": "no independent existence",               "stage": "fruition",   "glossary": "emptiness" },
+    { "id": "nature-of-mind",    "label": "Nature of Mind",       "role": "emptiness ⊕ clarity",                    "stage": "fruition",   "glossary": "nature-of-mind" },
+    { "id": "chagchen",          "label": "Great Seal",            "role": "the Great Seal — the fruition",          "stage": "fruition",   "glossary": "chagchen", "emphasis": true }
+  ],
+  "edges": [
+    { "from": "four-thoughts",     "to": "ngondro",        "type": "feeds" },
+    { "from": "three-jewels",      "to": "ngondro",        "type": "feeds" },
+    { "from": "bodhicitta",        "to": "ngondro",        "type": "feeds" },
+    { "from": "ngondro",           "to": "two-accumulations", "type": "feeds" },
+    { "from": "two-accumulations", "to": "yidam",          "type": "feeds",     "label": "" },
+    { "from": "two-accumulations", "to": "sixyogas",       "type": "feeds",     "label": "" },
+    { "from": "wang",              "to": "yidam",          "type": "requires",  "label": "" },
+    { "from": "shamatha",          "to": "vipashyana",     "type": "feeds" },
+    { "from": "shamatha",          "to": "yidam",          "type": "supports",  "label": "" },
+    { "from": "vipashyana",        "to": "nature-of-mind", "type": "feeds" },
+    { "from": "yidam",             "to": "chagchen",       "type": "feeds" },
+    { "from": "guru-yoga",         "to": "chagchen",       "type": "feeds",     "label": "condensed gateway" },
+    { "from": "phowa",             "to": "pure-land",      "type": "feeds",     "label": "" },
+    { "from": "sixyogas",          "to": "chagchen",       "type": "secondary", "label": "" },
+    { "from": "emptiness",         "to": "nature-of-mind", "type": "feeds" },
+    { "from": "nature-of-mind",    "to": "chagchen",       "type": "feeds",     "label": "" },
+    { "from": "buddha-nature",     "to": "nature-of-mind", "type": "secondary", "label": "" }
+  ]
+}

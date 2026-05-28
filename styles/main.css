@@ -1,0 +1,507 @@
+/* Base layout & components. Skeleton — the PM agent expands per handover §3/§4. */
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: var(--step-md);
+  line-height: 1.7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--indigo); text-underline-offset: 0.15em; text-decoration-thickness: 1px; }
+a:hover { color: var(--maroon); }
+
+/* Visible focus everywhere (§7 a11y) */
+:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; border-radius: 2px; }
+
+img, svg { max-width: 100%; height: auto; }
+
+/* Layout shell */
+.container { width: min(100% - 2.5rem, 72rem); margin-inline: auto; }
+.prose { max-width: var(--measure); }
+
+/* ---- Sticky tabbed header (replaces the old scroll-anchor nav + wordmark) ----
+   A role="tablist" of role="tab" buttons; the Glossary tab is an <a> to the
+   /glossary/ route. No brand/wordmark by design — the header is just the tabs
+   plus the script-mode toggle. Responsive: the tab row wraps, and on narrow
+   widths scrolls horizontally so it stays usable down to 360px. */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in oklab, var(--paper) 92%, transparent);
+  backdrop-filter: saturate(1.2) blur(8px);
+  border-bottom: 1px solid var(--rule);
+}
+.site-header-inner {
+  display: flex; align-items: center; gap: var(--space-3);
+  min-height: 3.25rem; flex-wrap: wrap;
+}
+.tabs {
+  display: flex; gap: 0.15rem; flex-wrap: wrap; align-items: stretch;
+  font-family: var(--font-latin-ui); font-size: var(--step-sm);
+}
+.tab {
+  appearance: none; background: transparent; border: 0;
+  border-bottom: 2px solid transparent;
+  font: inherit; color: var(--ink-soft); cursor: pointer;
+  padding: 0.85rem 0.7rem 0.7rem; line-height: 1.2; white-space: nowrap;
+  text-decoration: none; border-radius: var(--radius) var(--radius) 0 0;
+}
+.tab:hover { color: var(--maroon); }
+.tab[aria-selected="true"] {
+  color: var(--maroon); border-bottom-color: var(--maroon); font-weight: 600;
+}
+.tab:focus-visible { outline: 2px solid var(--indigo); outline-offset: -2px; }
+/* The Glossary tab is a route link, not a panel toggle — quiet trailing cue. */
+.tab-link::after { content: " \2197"; font-size: 0.85em; opacity: 0.7; }
+
+/* Tab panels: only the active one is shown (others carry [hidden]). */
+.tab-panel[hidden] { display: none; }
+
+@media (max-width: 560px) {
+  .site-header-inner { flex-wrap: nowrap; }
+  .tabs {
+    flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin; min-width: 0;
+  }
+}
+
+/* Skip link */
+.skip-link { position: absolute; left: -999px; }
+.skip-link:focus { left: 1rem; top: 0.5rem; background: var(--paper-sink); padding: 0.5rem 0.75rem; border-radius: var(--radius); z-index: 100; }
+
+/* Section rhythm */
+section { padding-block: var(--space-5); border-top: 1px solid var(--rule); }
+section:first-of-type { border-top: 0; }
+.section-head { margin-bottom: var(--space-3); }
+
+/* Hero (legacy — the full-height hero was retired; the slim .wordmark replaces
+   it above the landing map. Rules kept harmless in case of reuse elsewhere.) */
+.hero { padding-block: var(--space-6) var(--space-5); text-align: center; border-top: 0; }
+.hero .tib-display { display: block; margin-bottom: var(--space-3); }
+.hero .lede { max-width: 48ch; margin-inline: auto; font-size: var(--step-lg); color: var(--ink-soft); }
+
+/* ---- Slim wordmark (replaces the old full-height hero) ----
+   Keeps the site identity — a SMALL Tibetan glyph + the name — without
+   competing with the landing map for the first screen. */
+.wordmark {
+  text-align: center;
+  padding-block: var(--space-4) var(--space-2);
+  display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+  border-top: 0;
+}
+.wordmark-tib {
+  font-family: var(--font-tib-display); line-height: 1.4;
+  font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--maroon);
+}
+.wordmark-name {
+  font-family: var(--font-latin-ui); font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; font-size: var(--step-sm); color: var(--ink-soft);
+}
+.wordmark-gloss {
+  font-family: var(--font-latin-ui); font-size: var(--step-xs);
+  letter-spacing: 0.02em; color: var(--ink-soft); opacity: 0.85;
+}
+
+/* ---- Landing centerpiece: "The Path" map dominates the first screen ---- */
+#path-map.is-landing {
+  border-top: 0;
+  padding-block: var(--space-2) var(--space-5);
+  min-height: 78vh;                 /* comfortably owns the first screen */
+  display: flex; flex-direction: column;
+}
+.section-head--center { text-align: center; margin-bottom: var(--space-2); }
+.section-head--center .eyebrow { margin-bottom: 0.2rem; }
+.path-title {
+  font-family: var(--font-latin-serif); color: var(--maroon-deep);
+  font-size: var(--step-2xl); line-height: 1.1; margin: 0;
+}
+/* The map's figure is the visual center: large, centered, calm spacing. */
+.cmap-figure { margin-inline: auto; width: 100%; max-width: 64rem; flex: 1 1 auto; }
+.cmap-figure .cmap { min-height: 420px; }
+.cmap-figure .cmap-legend { justify-content: center; }
+.cmap-figure figcaption { margin: var(--space-2) auto 0; text-align: center; max-width: 70ch; }
+
+/* ---- "What this map shows": prose hidden behind a +/− toggle ----
+   Native <details>/<summary>; the default disclosure triangle is removed and a
+   custom +/− marker is drawn so the control reads as "+ / −". Keyboard operable
+   (native), with a visible focus ring; uses theme tokens so light + dark work. */
+.path-intro { margin: 0 auto var(--space-2); max-width: var(--measure); width: 100%; }
+.path-intro-summary {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  margin-inline: auto; width: max-content;
+  cursor: pointer; list-style: none;
+  padding: 0.2rem 0.3rem; border-radius: var(--radius);
+}
+.path-intro-summary .path-title { margin: 0; }
+.path-intro-summary::-webkit-details-marker { display: none; }  /* Safari triangle */
+.path-intro-summary:hover { color: var(--maroon); }
+.path-intro-summary:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+/* The +/− marker: a small square button-like glyph drawn with borders. */
+.path-intro-plus {
+  position: relative; flex: none; width: 1.15rem; height: 1.15rem;
+  border: 1px solid var(--rule-strong); border-radius: 4px;
+  background: var(--paper);
+}
+.path-intro-plus::before, .path-intro-plus::after {
+  content: ""; position: absolute; background: var(--maroon);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.path-intro-plus::before { width: 0.6rem; height: 1.6px; }          /* horizontal bar */
+.path-intro-plus::after  { width: 1.6px; height: 0.6rem; }          /* vertical bar — makes a "+" */
+.path-intro[open] .path-intro-plus::after { display: none; }        /* drop vertical → "−" */
+.path-intro[open] .path-intro-summary { color: var(--maroon); }
+.path-intro-summary:hover .path-intro-plus { border-color: var(--maroon); }
+.path-intro-body { margin-top: var(--space-1); text-align: left; }
+.path-intro-body p { margin-inline: auto; }
+
+/* Glossary-linked map nodes are deep links — show the link affordance. */
+.cmap-node--link { cursor: pointer; }
+
+@media (max-width: 639px) {
+  #path-map.is-landing { min-height: 0; padding-block: var(--space-2) var(--space-4); }
+  .cmap-figure .cmap { min-height: 0; }
+}
+
+/* Cards / insets */
+.card { background: var(--paper-sink); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--space-3); }
+
+/* TODO marker for skeleton stubs (agent removes as sections are filled) */
+.todo { font-family: var(--font-latin-ui); font-size: var(--step-xs); color: var(--ink-soft); border: 1px dashed var(--rule-strong); border-radius: var(--radius); padding: 0.6rem 0.9rem; display: inline-block; }
+
+/* --- Glossary / test grid (museum-object presentation) --- */
+.term-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: var(--space-3); padding: 0; list-style: none; margin: var(--space-3) 0 0; }
+.term-card { background: var(--paper-sink); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--space-3); display: flex; flex-direction: column; gap: var(--space-1); position: relative; }
+.term-card .tib { font-family: var(--font-tib-display); font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.5; color: var(--maroon); cursor: help; border-radius: var(--radius); }
+.term-card .tib:hover, .term-card .tib:focus-visible { background: color-mix(in oklab, var(--saffron) 16%, transparent); }
+.term-card .phonetic { font-size: var(--step-lg); }
+.term-card .gloss { color: var(--ink-soft); font-size: var(--step-sm); }
+.term-card .cat { font-family: var(--font-latin-ui); font-size: var(--step-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--indigo); }
+
+/* Concept cards (Sanskrit / English-primary terms — no Tibetan headword).
+   Lead with the headword large in the Latin display face instead of a glyph. */
+.term-card .head {
+  font-family: var(--font-latin-serif); font-weight: 600;
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem); line-height: 1.25;
+  color: var(--maroon); cursor: help; border-radius: var(--radius);
+  margin-block: 0.2rem 0.1rem;
+}
+.term-card .head:hover, .term-card .head:focus-visible { background: color-mix(in oklab, var(--saffron) 16%, transparent); }
+.term-card .sanskrit { font-family: var(--font-latin-serif); font-style: italic; color: var(--ink-soft); font-size: var(--step-md); }
+/* Concept cards get a quiet indigo edge instead of the maroon/Tibetan weight. */
+.term-card[data-concept="true"] { border-left: 3px solid color-mix(in oklab, var(--indigo) 55%, var(--rule)); }
+
+/* Syllable chips — split on the tsheg (§5.3) */
+.syllables { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.syllable { font-family: var(--font-tib-body); font-size: 1.6rem; line-height: 2; padding: 0.1rem 0.4rem; border-radius: 4px; background: color-mix(in oklab, var(--saffron) 22%, var(--paper)); }
+
+/* Verification badge — the notify-and-continue safeguard (§9). */
+.verify { position: absolute; top: 0.6rem; right: 0.6rem; font-family: var(--font-latin-ui); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.06em; padding: 0.18rem 0.45rem; border-radius: 999px; text-transform: uppercase; }
+.verify.ok { background: color-mix(in oklab, var(--ok) 22%, var(--paper)); color: var(--ok); }
+.verify.unverified { background: color-mix(in oklab, var(--warn) 22%, var(--paper)); color: var(--warn); }
+.verify.concept { background: color-mix(in oklab, var(--indigo) 16%, var(--paper)); color: var(--indigo); }
+.term-card[data-unverified="true"] { outline: 1px dashed var(--warn); }
+
+/* Proof-sheet concept rows: clearly marked, quietly dimmed — keeps the sheet a
+   clean Tibetan-verification view. */
+.term-card[data-concept="true"] .head { font-family: var(--font-latin-serif); font-weight: 600; font-size: var(--step-lg); color: var(--maroon); }
+.term-card .no-tib-note { font-family: var(--font-latin-ui); font-size: var(--step-xs); letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); opacity: 0.8; }
+
+footer { padding-block: var(--space-4); border-top: 1px solid var(--rule); color: var(--ink-soft); font-family: var(--font-latin-ui); font-size: var(--step-sm); }
+footer p { max-width: 70ch; }
+
+/* ============================================================
+   CONTENT — sections 1–9 (handover §4). Mobile-first, reading-led.
+   ============================================================ */
+
+/* Prose rhythm: comfortable measure, generous spacing between paragraphs. */
+.prose p { max-width: var(--measure); margin-block: 0 var(--space-2); }
+.prose h3 { margin-block: var(--space-3) var(--space-1); color: var(--maroon-deep); }
+.prose h4 { margin: 0 0 0.25rem; font-family: var(--font-latin-serif); font-size: var(--step-md); color: var(--ink); }
+
+/* Hero romanization line under the giant glyph */
+.hero-romanization { font-family: var(--font-latin-ui); font-size: var(--step-sm); letter-spacing: 0.04em; color: var(--ink-soft); margin: 0 0 var(--space-3); }
+.hero-romanization .wylie { color: var(--ink-soft); }
+
+/* Inline term anchors — every glossary term in the prose is hoverable.
+   Quiet until hovered/focused: a subtle dotted underline says "definition here".
+   Works in light & dark (uses theme tokens); keeps the term's own weight/italic. */
+[data-term] {
+  cursor: help;
+  border-bottom: 1px dotted var(--rule-strong);
+  text-decoration: none;
+  color: inherit;
+  border-radius: 1px;
+}
+[data-term]:hover, [data-term]:focus-visible {
+  border-bottom-style: dashed;
+  border-bottom-color: var(--maroon);
+  color: var(--maroon);
+}
+/* Keyboard focus must stay clearly visible (these are role="button"). */
+[data-term]:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+/* The strong/em a term may wrap should inherit the maroon highlight on hover. */
+[data-term]:hover :is(strong, em), [data-term]:focus-visible :is(strong, em) { color: inherit; }
+/* The three-way distinction list */
+.distinction-list { display: grid; gap: var(--space-2); margin: var(--space-2) 0; max-width: var(--measure); }
+.distinction-list dt { font-family: var(--font-latin-serif); font-weight: 600; font-size: var(--step-lg); color: var(--maroon-deep); }
+.distinction-list dt [data-term] { font-size: 1em; }
+.distinction-list dd { margin: 0.25rem 0 0; color: var(--ink); }
+
+.callout {
+  max-width: var(--measure);
+  background: color-mix(in oklab, var(--saffron) 14%, var(--paper));
+  border-left: 3px solid var(--saffron);
+  padding: var(--space-2) var(--space-3); border-radius: var(--radius);
+  margin-block: var(--space-3);
+}
+.callout.transition { border-left-color: var(--maroon); background: color-mix(in oklab, var(--maroon) 10%, var(--paper)); }
+.positionality { max-width: var(--measure); font-size: var(--step-sm); color: var(--ink-soft); font-style: italic; border-left: 2px solid var(--rule-strong); padding-left: var(--space-2); }
+
+/* ---- Visualizations ---- */
+.viz-figure { margin: var(--space-3) 0; }
+.viz-figure figcaption { font-family: var(--font-latin-ui); font-size: var(--step-sm); color: var(--ink-soft); margin-bottom: var(--space-1); max-width: 60ch; }
+.viz { width: 100%; min-height: 200px; background: var(--paper-sink); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--space-2); overflow: hidden; }
+.viz svg .node:focus-visible, .viz svg .claimant-node:focus-visible, .viz svg .cnode:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+.viz-fallback { margin: var(--space-2) 0 0; font-family: var(--font-latin-ui); font-size: var(--step-sm); }
+.viz-fallback summary { cursor: pointer; color: var(--indigo); padding: 0.4rem 0; }
+.viz-fallback table { border-collapse: collapse; width: 100%; margin-top: var(--space-1); }
+.viz-fallback caption { text-align: left; color: var(--ink-soft); padding-bottom: 0.4rem; }
+.viz-fallback th, .viz-fallback td { border: 1px solid var(--rule); padding: 0.4rem 0.6rem; text-align: left; vertical-align: top; }
+.viz-fallback thead th { background: var(--paper-sink); }
+
+/* ---- Concept-relationship map (§4.6) ----
+   Layered top→bottom flow. Real HTML nodes in stage bands; an SVG arrow layer
+   sits BEHIND them (position + z-index). Flat, calm — no shadows/gradients on
+   the diagram itself (Tufte: maximize data-ink). */
+.cmap { position: relative; padding: var(--space-3) var(--space-2); }
+.cmap-edges {
+  position: absolute; inset: 0; z-index: 0;     /* arrows sit BEHIND the boxes */
+  pointer-events: none; overflow: visible;
+}
+.cmap-lanes { position: relative; z-index: 1; display: grid; gap: var(--space-3); }
+/* Edge LABELS ride in their own overlay ABOVE the node boxes (z-index 2) so a
+   label can never be hidden behind a box. Pointer-events off keeps the boxes
+   beneath fully hoverable/clickable. */
+.cmap-edge-labels {
+  position: absolute; inset: 0; z-index: 2;
+  pointer-events: none; overflow: visible;
+}
+.cmap-edge-label {
+  font-family: var(--font-latin-ui); font-size: 0.72rem; letter-spacing: 0.01em;
+}
+
+/* A stage band: quiet receding label on the left, the row of nodes beside it. */
+.cmap-band { display: grid; grid-template-columns: 9.5rem 1fr; gap: var(--space-2); align-items: start; }
+.cmap-band-label { display: flex; flex-direction: column; gap: 0.15rem; padding-top: 0.35rem; }
+.cmap-band-title {
+  font-family: var(--font-latin-ui); font-size: var(--step-xs);
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 600; line-height: 1.3;
+}
+.cmap-band-note {
+  font-family: var(--font-latin-ui); font-size: 0.7rem;
+  color: var(--ink-soft); opacity: 0.7; line-height: 1.3;
+}
+.cmap-band-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: stretch; }
+
+/* A node: real focusable element; label + inline role gloss (words integrated). */
+.cmap-node {
+  display: flex; flex-direction: column; gap: 0.1rem;
+  background: var(--paper); border: 1px solid var(--rule-strong);
+  border-radius: var(--radius); padding: 0.5rem 0.7rem;
+  min-width: 8.5rem; max-width: 14rem; cursor: help;
+}
+.cmap-node-label { font-family: var(--font-latin-serif); font-weight: 600; font-size: var(--step-sm); color: var(--ink); line-height: 1.25; }
+.cmap-node-role { font-family: var(--font-latin-ui); font-size: 0.72rem; color: var(--ink-soft); line-height: 1.3; }
+
+/* Glyph nodes: Tibetan stays the hero on top, with the English keyword (the
+   node `label`) as a small Latin line beneath — readable to a beginner while
+   keeping the Tibetan-first display the reviewer liked. */
+.cmap-node--glyph { align-items: center; text-align: center; gap: 0.05rem; padding-top: 0.4rem; padding-bottom: 0.45rem; }
+.cmap-node-tib {
+  font-family: var(--font-tib-display);
+  font-size: 1.7rem; line-height: 1.5; color: var(--maroon);
+  letter-spacing: 0; white-space: nowrap;
+}
+.cmap-node-key {
+  font-family: var(--font-latin-ui); font-weight: 600; font-size: 0.74rem;
+  letter-spacing: 0.01em; color: var(--ink); line-height: 1.2;
+}
+.cmap-node--glyph.is-emphasis .cmap-node-key { color: var(--maroon-deep); }
+/* Emphasis glyph node (Mahāmudrā): a touch of gold on the glyph too. */
+.cmap-node--glyph.is-emphasis .cmap-node-tib { color: var(--maroon-deep); }
+/* Glyph chips inside a group: smaller glyph so the group stays compact. */
+.cmap-chip.cmap-node--glyph { padding: 0.3rem 0.5rem 0.35rem; }
+.cmap-chip .cmap-node-tib { font-size: 1.35rem; line-height: 1.45; }
+.cmap-chip .cmap-node-key { font-size: 0.7rem; }
+
+.cmap-node:hover, .cmap-node:focus-visible { border-color: var(--maroon); }
+.cmap-node:focus-visible { outline: 2px solid var(--indigo); outline-offset: 2px; }
+/* Term-anchor hover override: don't draw the dotted underline on a whole card. */
+.cmap-node[data-term] { border-bottom: 1px solid var(--rule-strong); }
+.cmap-node[data-term]:hover, .cmap-node[data-term]:focus-visible { color: inherit; border-bottom-color: var(--maroon); }
+
+/* Emphasis — Mahāmudrā only. A single gold/saffron touch (§6: gold = emphasis). */
+.cmap-node.is-emphasis {
+  border-color: var(--saffron);
+  background: color-mix(in oklab, var(--gold) 12%, var(--paper));
+}
+.cmap-node.is-emphasis .cmap-node-label { color: var(--maroon-deep); }
+.cmap-node.is-emphasis[data-term]:hover, .cmap-node.is-emphasis[data-term]:focus-visible { border-bottom-color: var(--saffron); }
+
+/* Group container: light inset, thin warm rule, small-caps head — "part-of"
+   shown by containment, so NO arrows touch the chips inside. */
+.cmap-group {
+  background: var(--paper-sink); border: 1px solid var(--rule);
+  border-radius: var(--radius); padding: 0.55rem 0.7rem;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.cmap-group-label { display: flex; flex-direction: column; gap: 0.05rem; }
+.cmap-group-name { font-family: var(--font-latin-serif); font-weight: 600; font-size: var(--step-sm); color: var(--maroon-deep); }
+.cmap-group-sub {
+  font-family: var(--font-latin-ui); font-size: 0.68rem; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--ink-soft); opacity: 0.85;
+}
+.cmap-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+/* Member chips: compact, quieter than standalone nodes. */
+.cmap-chip { min-width: 0; max-width: 12rem; padding: 0.3rem 0.55rem; background: var(--paper); }
+.cmap-chip .cmap-node-label { font-size: 0.8rem; font-family: var(--font-latin-ui); font-weight: 600; }
+.cmap-chip .cmap-node-role { font-size: 0.66rem; }
+/* The group HEAD node is the arrow anchor for the group's cross-stage edges.
+   It must occupy space (for getBoundingClientRect) but read as the title row,
+   so render it inline-quiet rather than as a second card. */
+.cmap-group-head {
+  border: 0; background: transparent; padding: 0; min-width: 0;
+  /* Bare anchor (no visible text — the group-name already prints the label).
+     It only needs a measurable rect near the group's top for arrow endpoints. */
+  min-height: 2px; margin: -0.35rem 0 0; cursor: default;
+}
+.cmap-group-head .cmap-node-label { font-family: var(--font-latin-serif); font-weight: 600; font-size: var(--step-sm); color: var(--maroon-deep); }
+.cmap-group-head .cmap-node-role { display: none; }   /* the group-sub already carries the gloss */
+.cmap-group-head[data-term] { border-bottom: 0; }
+
+/* Narrow widths: the group cards (Ngöndro, Six Yogas) otherwise sit content-
+   sized on their own wrapped line, leaving a big empty gap beside them. Let them
+   span the full content row so their chips reflow to fill the width. */
+@media (max-width: 900px) {
+  .cmap-band-row > .cmap-group { flex: 1 1 100%; }
+  .cmap-band-row > .cmap-group .cmap-chip { flex: 1 1 9rem; max-width: none; }
+}
+
+/* Edge-type legend (the only legend — node meaning is inline via roles). */
+.cmap-legend {
+  list-style: none; margin: var(--space-2) 0 0; padding: 0;
+  display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-3);
+  font-family: var(--font-latin-ui); font-size: var(--step-xs); color: var(--ink-soft);
+}
+.cmap-legend li { display: flex; align-items: center; gap: 0.45rem; }
+.cmap-key { display: inline-block; width: 2.2rem; height: 0; border-top-width: 0; }
+.cmap-key--feeds { border-top: 1.6px solid var(--maroon); }
+.cmap-key--req { border-top: 1.2px dashed var(--ink-soft); }
+.cmap-key--sec { border-top: 1px dashed var(--rule-strong); }
+
+/* Fallback list + relationships table styling (reuses .viz-fallback shell). */
+.cmap-fallback-list { margin: var(--space-1) 0 var(--space-2); padding-left: 1.3rem; }
+.cmap-fallback-list ul { list-style: disc; margin: 0.2rem 0; padding-left: 1.2rem; }
+.cmap-fallback-list li { margin-bottom: 0.25rem; }
+.cmap-rel-table { margin-top: var(--space-2); }
+
+/* Responsive: narrow screens stack the band label above the nodes; the SVG
+   arrows are hidden by JS (drawConceptEdges) and the stage order + the
+   fallback table carry the relationships. */
+@media (max-width: 639px) {
+  .cmap-band { grid-template-columns: 1fr; gap: 0.4rem; }
+  .cmap-band-label { padding-top: 0; }
+  .cmap-node, .cmap-chip { max-width: none; flex: 1 1 12rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cmap-node { transition: none !important; }
+}
+
+/* ---- Claimants (controversy) — two parallel columns ---- */
+.claimants { display: grid; grid-template-columns: 1fr; gap: var(--space-2); margin: var(--space-3) 0; }
+@media (min-width: 720px) { .claimants { grid-template-columns: 1fr 1fr; } }
+.claimant { background: var(--paper-sink); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--space-3); }
+.claimant h3 { margin-top: 0; color: var(--ink); }
+.claimant .b-year { font-family: var(--font-latin-ui); font-size: var(--step-xs); color: var(--ink-soft); font-weight: 400; margin-left: 0.4rem; }
+.claimant ul { margin: 0; padding-left: 1.1rem; }
+.claimant li { margin-bottom: 0.4rem; }
+
+/* ---- Practices ---- */
+.prac-h { margin-top: var(--space-4); display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; }
+.prac-h [data-term] { color: var(--maroon); }
+
+.ngondro { list-style: none; padding: 0; margin: var(--space-2) 0; display: grid; gap: var(--space-2); grid-template-columns: 1fr; counter-reset: ng; }
+@media (min-width: 640px) { .ngondro { grid-template-columns: 1fr 1fr; } }
+.ngondro li { position: relative; background: var(--paper-sink); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--space-3); padding-top: var(--space-4); }
+.ngondro .ng-n { position: absolute; top: var(--space-2); left: var(--space-3); font-family: var(--font-tib-display); font-size: 1.6rem; color: var(--maroon); font-weight: 700; }
+.ngondro li::after { content: "× " attr(data-count); position: absolute; top: var(--space-2); right: var(--space-3); font-family: var(--font-latin-ui); font-size: var(--step-xs); letter-spacing: 0.04em; color: var(--maroon-deep); background: color-mix(in oklab, var(--saffron) 22%, var(--paper)); padding: 0.15rem 0.45rem; border-radius: 999px; }
+.ngondro h4 { margin: 0 0 0.3rem; }
+.ngondro p { margin: 0; font-size: var(--step-sm); color: var(--ink); }
+
+/* Featured Phowa block */
+.phowa-feature { background: color-mix(in oklab, var(--maroon) 8%, var(--paper)); border: 1px solid var(--rule-strong); border-radius: var(--radius); padding: var(--space-4); margin: var(--space-4) 0; }
+.phowa-feature .eyebrow { color: var(--maroon-deep); }
+.phowa-feature h3 { margin-top: 0.25rem; }
+.phowa-glyph { text-align: center; margin: var(--space-3) 0; }
+.phowa-tib { display: inline-block; font-size: clamp(3rem, 12vw, 7rem); line-height: 1.5; color: var(--maroon); }
+.phowa-rom { font-family: var(--font-latin-ui); font-size: var(--step-sm); color: var(--ink-soft); margin: 0; }
+/* syllable-walk states (phowa.js) */
+.walk-syl { transition: color 0.4s ease, text-shadow 0.4s ease; color: color-mix(in oklab, var(--maroon) 45%, var(--ink-soft)); }
+.walk-syl.walk-on { color: var(--maroon); text-shadow: 0 0 0.4rem color-mix(in oklab, var(--saffron) 60%, transparent); }
+.walk-syl.walk-static { color: var(--maroon); }
+.walk-reading { display: block; min-height: 1.4em; font-family: var(--font-latin-ui); font-size: var(--step-md); color: var(--maroon-deep); letter-spacing: 0.06em; margin-top: 0.3rem; }
+@media (prefers-reduced-motion: reduce) { .walk-syl { transition: none; } }
+
+/* Six Yogas cards */
+.yoga-cards { list-style: none; padding: 0; margin: var(--space-2) 0; display: grid; gap: var(--space-2); grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); }
+.yoga-cards li { background: var(--paper-sink); border: 1px solid var(--rule); border-radius: var(--radius); padding: var(--space-3); text-align: center; }
+.yoga-cards .y-tib { display: block; font-family: var(--font-tib-display); font-size: 2.6rem; line-height: 1.6; color: var(--maroon); margin-bottom: 0.3rem; border-bottom: 0; cursor: help; }
+.yoga-cards h4 { margin: 0 0 0.25rem; }
+.yoga-cards p { margin: 0; font-size: var(--step-sm); color: var(--ink-soft); }
+
+/* ---- Sources ---- */
+.sources-grid { display: grid; gap: var(--space-3); grid-template-columns: 1fr; }
+@media (min-width: 700px) { .sources-grid { grid-template-columns: 1fr 1fr; } .sources-grid .span-2 { grid-column: 1 / -1; } }
+.source-col h3 { margin: 0 0 0.4rem; font-size: var(--step-md); color: var(--maroon-deep); }
+.source-col ul { margin: 0; padding-left: 1.1rem; }
+.source-col li { margin-bottom: 0.4rem; }
+.claimant-links { display: grid; gap: var(--space-2); grid-template-columns: 1fr 1fr; margin-top: var(--space-1); }
+.claimant-link { display: flex; flex-direction: column; gap: 0.2rem; padding: var(--space-2); border: 1px solid var(--rule-strong); border-radius: var(--radius); text-decoration: none; background: var(--paper-sink); }
+.claimant-link span { font-family: var(--font-latin-ui); font-size: var(--step-xs); color: var(--ink-soft); }
+
+/* ============================================================
+   TERM-CARD POPOVER (handover §5.3) — hover/tap/focus museum object
+   ============================================================ */
+.term-popover {
+  position: absolute; z-index: 200; width: min(20rem, 90vw);
+  background: var(--paper); border: 1px solid var(--rule-strong);
+  border-radius: var(--radius); box-shadow: 0 8px 30px color-mix(in oklab, var(--ink) 22%, transparent);
+  padding: var(--space-3); font-family: var(--font-latin-ui);
+}
+.term-popover[hidden] { display: none; }
+.term-popover .tp-tib { font-family: var(--font-tib-display); font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1.5; color: var(--maroon); }
+/* Concept popover: headword large in the Latin display face, Sanskrit italic. */
+.term-popover .tp-head { font-family: var(--font-latin-serif); font-weight: 600; font-size: clamp(1.4rem, 5vw, 1.9rem); line-height: 1.2; color: var(--maroon); }
+.term-popover .tp-meta .sanskrit { font-family: var(--font-latin-serif); font-style: italic; font-size: var(--step-md); color: var(--ink); }
+.term-popover .tp-meta { display: flex; gap: 0.6rem; align-items: baseline; flex-wrap: wrap; margin: 0.2rem 0 0.4rem; }
+.term-popover .tp-meta .phonetic { font-family: var(--font-latin-serif); font-style: italic; font-size: var(--step-md); color: var(--ink); }
+.term-popover .tp-meta .wylie { font-family: var(--font-latin-ui); font-size: var(--step-sm); color: var(--ink-soft); }
+.term-popover .tp-gloss { margin: 0 0 var(--space-2); font-size: var(--step-sm); color: var(--ink); }
+.term-popover .syllables { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: var(--space-2); }
+.term-popover .tp-flag { margin: 0 0 var(--space-1); font-size: var(--step-xs); color: var(--warn); }
+.term-popover .tp-link { font-size: var(--step-sm); }
+
+/* Colored syllable chips (tsheg-split). c0..c4 cycle warm hues. */
+.syllable.c0 { background: color-mix(in oklab, var(--saffron) 26%, var(--paper)); }
+.syllable.c1 { background: color-mix(in oklab, var(--maroon) 18%, var(--paper)); }
+.syllable.c2 { background: color-mix(in oklab, var(--jade) 22%, var(--paper)); }
+.syllable.c3 { background: color-mix(in oklab, var(--indigo) 18%, var(--paper)); }
+.syllable.c4 { background: color-mix(in oklab, var(--gold) 26%, var(--paper)); }

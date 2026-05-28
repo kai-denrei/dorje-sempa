@@ -1,0 +1,67 @@
+/* Typography — the centerpiece. handover.md §5.
+   Tibetan is the hero: large, generous line-height, never colliding stacks.
+   Latin serves it. Every Tibetan run MUST carry lang="bo" in the markup. */
+
+/* --- Self-hosted Tibetan faces (full faces, NOT subset — §5.1) ---
+   Shipped as full TTF for correctness; converting to woff2 is a perf-polish
+   item (pip install fonttools brotli; flavor='woff2'). Rendering is identical. */
+@font-face {
+  font-family: 'Jomolhari';
+  src: url('/fonts/Jomolhari-Regular.ttf?v=e8e6cea4') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Serif Tibetan';
+  src: url('/fonts/NotoSerifTibetan-VF.ttf?v=e8e6cea4') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  /* Tibetan stacks */
+  --font-tib-display: 'Jomolhari', 'Noto Serif Tibetan', serif;   /* hero / display book-hand */
+  --font-tib-body:    'Noto Serif Tibetan', 'Jomolhari', serif;   /* inline + glossary workhorse */
+
+  /* Latin — understated. System stack now; agent may self-host Newsreader/Inter for polish. */
+  --font-latin-serif: 'Newsreader', 'Spectral', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-latin-ui:    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --tib-inline-bump: 1.4;   /* Tibetan reads small at Latin's optical size (§5.2: ×1.3–1.5) */
+}
+
+html { font-family: var(--font-latin-serif); }
+
+/* Inline Tibetan runs inside Latin prose: bump size, give the stacks air. */
+:lang(bo) {
+  font-family: var(--font-tib-body);
+  font-size: calc(1em * var(--tib-inline-bump));
+  line-height: 2.2;            /* §5.2: body Tibetan 2.0–2.4; never let stacks collide */
+  text-align: left;            /* never justify Tibetan runs */
+}
+
+/* Display Tibetan — the jewel. Looser still. */
+.tib-display {
+  font-family: var(--font-tib-display);
+  font-size: var(--step-hero);
+  line-height: 1.6;            /* display is huge; this is loose at that scale */
+  font-weight: 400;
+  color: var(--maroon);
+  letter-spacing: 0;
+}
+
+/* Latin headings */
+h1, h2, h3 { font-family: var(--font-latin-serif); font-weight: 600; line-height: 1.15; color: var(--ink); }
+h1 { font-size: var(--step-2xl); }
+h2 { font-size: var(--step-xl); }
+h3 { font-size: var(--step-lg); }
+
+.eyebrow { font-family: var(--font-latin-ui); font-size: var(--step-xs); letter-spacing: 0.12em; text-transform: uppercase; color: var(--maroon); }
+
+/* The Wylie transliteration is the canonical romanization (§8.6) — render it as code-like. */
+.wylie { font-family: var(--font-latin-ui); font-style: normal; color: var(--ink-soft); }
+.phonetic { font-family: var(--font-latin-serif); font-style: italic; }
+
+/* A subtle head-line motif echoing the Tibetan dbu-can head-line, for dividers.
+   Never overlay this on real glyphs (§5.2). */
+.headline-rule { height: 2px; background: linear-gradient(90deg, transparent, var(--rule-strong), transparent); border: 0; margin: var(--space-4) 0; }

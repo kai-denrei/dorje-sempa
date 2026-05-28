@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Glossary — The Path</title>
+  <meta name="description" content="A searchable glossary that doubles as a Tibetan script explorer — each term presented as a museum object.">
+  <link rel="preload" href="/fonts/Jomolhari-Regular.ttf?v=e8e6cea4" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/fonts/NotoSerifTibetan-VF.ttf?v=e8e6cea4" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="/styles/tokens.css?v=e8e6cea4">
+  <link rel="stylesheet" href="/styles/typography.css?v=e8e6cea4">
+  <link rel="stylesheet" href="/styles/main.css?v=e8e6cea4">
+
+  <!-- PWA: manifest + iOS/standalone meta + maskable app icon (scope "/") -->
+  <link rel="manifest" href="/manifest.webmanifest?v=e8e6cea4">
+  <meta name="theme-color" content="#7a3a31">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="The Path">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon-180.png?v=e8e6cea4">
+  <style>
+    .explorer-head { padding-block: var(--space-4) var(--space-2); }
+    .explorer-controls { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin: var(--space-2) 0; }
+    #search { font-family: var(--font-latin-ui); font-size: var(--step-md); padding: 0.55rem 0.8rem; border: 1px solid var(--rule-strong); border-radius: var(--radius); background: var(--paper); color: var(--ink); min-width: 16rem; }
+    #category-filter { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .filter-btn { font-family: var(--font-latin-ui); font-size: var(--step-sm); text-transform: capitalize; padding: 0.4rem 0.8rem; border: 1px solid var(--rule-strong); border-radius: 999px; background: var(--paper); color: var(--ink-soft); cursor: pointer; }
+    .filter-btn[aria-pressed="true"] { background: var(--maroon); color: var(--paper); border-color: var(--maroon); }
+    .term-card.flash { animation: flash 1.8s ease; }
+    @keyframes flash { 0%, 100% { box-shadow: 0 0 0 0 transparent; } 25% { box-shadow: 0 0 0 3px var(--saffron); } }
+    @media (prefers-reduced-motion: reduce) { .term-card.flash { animation: none; outline: 3px solid var(--saffron); } }
+    .glossary-toolbar { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; justify-content: space-between; margin: var(--space-2) 0; }
+  </style>
+</head>
+<body>
+  <!-- HEADER — same tablist as the homepage. On this sub-page the in-page-panel
+       tabs are real links to the homepage hash (a separate document); the
+       Glossary tab is the current page (aria-current), styled selected. -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <div class="tabs" role="tablist" aria-label="Sections">
+        <a class="tab" role="tab" id="tab-the-path"
+           href="/#the-path" aria-selected="false" tabindex="-1"
+           data-tab="the-path">The Path</a>
+        <a class="tab" role="tab" id="tab-lineage"
+           href="/#lineage" aria-selected="false" tabindex="-1"
+           data-tab="lineage">Lineage</a>
+        <a class="tab" role="tab" id="tab-diamond-way"
+           href="/#diamond-way" aria-selected="false" tabindex="-1"
+           data-tab="diamond-way">Diamond Way</a>
+        <a class="tab" role="tab" id="tab-practices"
+           href="/#practices" aria-selected="false" tabindex="-1"
+           data-tab="practices">Practices</a>
+        <a class="tab" role="tab" id="tab-glossary"
+           href="/glossary/" aria-current="page" aria-selected="true" tabindex="0"
+           data-tab="glossary">Glossary</a>
+        <a class="tab" role="tab" id="tab-sources"
+           href="/#sources" aria-selected="false" tabindex="-1"
+           data-tab="sources">Sources</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="explorer-head">
+      <p class="eyebrow">The typographic showpiece</p>
+      <h1>Glossary &amp; Script Explorer</h1>
+      <p class="prose">Each entry is a museum object: Tibetan terms are presented large in script, with Wylie, phonetic, and a <span data-term="tsheg">tsheg</span>-split syllable breakdown. Beginner concepts — the English and Sanskrit ideas a newcomer meets first — lead with their headword instead. Hover, tap or focus any term for its card. New here? Start with the <strong>foundation</strong> filter.</p>
+      <div class="explorer-controls">
+        <label for="search" class="skip-link">Search terms</label>
+        <input id="search" type="search" placeholder="Search phonetic, Wylie, or meaning…" autocomplete="off">
+        <div id="category-filter" role="group" aria-label="Filter by category"></div>
+      </div>
+    </header>
+    <ul id="term-grid" class="term-grid"></ul>
+  </main>
+
+  <script type="module" src="/src/glossary.js?v=e8e6cea4"></script>
+  <script type="module" src="/src/pwa.js?v=e8e6cea4"></script>
+</body>
+</html>

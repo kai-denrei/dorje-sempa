@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Path — The Karma Kagyu Lineage &amp; Diamond Way Buddhism</title>
+  <meta name="description" content="A calm, scholarly guide to the Karma Kagyu lineage, Diamond Way Buddhism, and the Vajrayāna — with the Tibetan script as a typographic art object.">
+
+  <!-- Preload the Tibetan faces (the hero glyph + inline workhorse). full faces, not subset (§5.1) -->
+  <link rel="preload" href="/fonts/Jomolhari-Regular.ttf?v=e8e6cea4" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="/fonts/NotoSerifTibetan-VF.ttf?v=e8e6cea4" as="font" type="font/ttf" crossorigin>
+
+  <link rel="stylesheet" href="/styles/tokens.css?v=e8e6cea4">
+  <link rel="stylesheet" href="/styles/typography.css?v=e8e6cea4">
+  <link rel="stylesheet" href="/styles/main.css?v=e8e6cea4">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="cb" content="e8e6cea4">
+  <link rel="icon" type="image/svg+xml" href="/cb-shapes/40.svg?v=e8e6cea4">
+  <script src="/cb-badge.js?v=e8e6cea4" defer></script>
+
+  <!-- PWA: manifest + iOS/standalone meta + maskable app icon (scope "/") -->
+  <link rel="manifest" href="/manifest.webmanifest?v=e8e6cea4">
+  <meta name="theme-color" content="#7a3a31">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="The Path">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon-180.png?v=e8e6cea4">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- HEADER — six in-page tabs (ARIA tabs pattern). The former scroll-anchor
+       nav and the "Gser Phreng" wordmark/brand are gone by design: the header
+       is just the tablist. The active tab is reflected in location.hash
+       (deep-linkable, Back/Forward aware) and wired in src/tabs.js. The
+       Glossary tab is a real link to the /glossary/ route. -->
+  <header class="site-header">
+    <div class="container site-header-inner">
+      <div class="tabs" role="tablist" aria-label="Sections">
+        <button type="button" class="tab" role="tab" id="tab-the-path"
+                aria-controls="panel-the-path" aria-selected="true" tabindex="0"
+                data-tab="the-path">The Path</button>
+        <button type="button" class="tab" role="tab" id="tab-lineage"
+                aria-controls="panel-lineage" aria-selected="false" tabindex="-1"
+                data-tab="lineage">Lineage</button>
+        <button type="button" class="tab" role="tab" id="tab-diamond-way"
+                aria-controls="panel-diamond-way" aria-selected="false" tabindex="-1"
+                data-tab="diamond-way">Diamond Way</button>
+        <button type="button" class="tab" role="tab" id="tab-practices"
+                aria-controls="panel-practices" aria-selected="false" tabindex="-1"
+                data-tab="practices">Practices</button>
+        <a class="tab tab-link" role="tab" id="tab-glossary"
+           href="/glossary/" aria-selected="false" tabindex="-1"
+           data-tab="glossary">Glossary</a>
+        <button type="button" class="tab" role="tab" id="tab-sources"
+                aria-controls="panel-sources" aria-selected="false" tabindex="-1"
+                data-tab="sources">Sources</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ========================= TAB 1 — THE PATH =========================
+         The landing centerpiece: eyebrow, title, the "+" details toggle, and
+         the concept map. This is the default/home panel, shown on first load. -->
+    <section id="panel-the-path" class="tab-panel container is-landing"
+             role="tabpanel" aria-labelledby="tab-the-path" tabindex="0">
+      <div class="section-head section-head--center">
+        <p class="eyebrow">Seed &rarr; Mind &rarr; Practice &rarr; Fruition</p>
+        <!-- Title with a "+" toggle to its right; the description stays hidden until expanded. -->
+        <details class="path-intro">
+          <summary class="path-intro-summary" aria-label="What this map shows">
+            <h1 class="path-title">The Path</h1>
+            <span class="path-intro-plus" aria-hidden="true"></span>
+          </summary>
+          <div class="prose path-intro-body">
+          <p>How the core practices and concepts feed into one another. Top to bottom is the shape of the path &mdash; from the <strong>ground</strong> that makes it possible, through the foundations and the meditative engine, to the <strong>fruition</strong>, <span data-term="chagchen">Mah&#257;mudr&#257;</span>. Vertical position is the meaningful axis; the arrows carry the &ldquo;feeds into.&rdquo;</p>
+        </div>
+      </details>
+      </div>
+
+      <figure class="viz-figure cmap-figure">
+        <div id="concept-map" class="viz cmap" role="img" aria-labelledby="pathmap-cap" data-viz="concept-map"></div>
+        <ul class="cmap-legend" aria-label="Edge types">
+          <li><span class="cmap-key cmap-key--feeds" aria-hidden="true"></span> feeds into</li>
+          <li><span class="cmap-key cmap-key--req" aria-hidden="true"></span> prerequisite / support</li>
+          <li><span class="cmap-key cmap-key--sec" aria-hidden="true"></span> secondary</li>
+        </ul>
+        <figcaption id="pathmap-cap">A layered flow from ground to fruition. Solid maroon arrows are the main path (&ldquo;feeds into&rdquo;); lighter dashed lines are prerequisites or supports; the faintest are secondary connections. Grouped practices (Ng&ouml;ndro, the Six Yogas) sit inside their containers. Each node opens its glossary entry; hover or focus a node for its definition.</figcaption>
+      </figure>
+
+      <details class="viz-fallback">
+        <summary>The path as a list, and every relationship as a table</summary>
+
+        <h4 id="pathmap-stages-h">The stages and their practices</h4>
+        <ol class="cmap-fallback-list" aria-labelledby="pathmap-stages-h">
+          <li><strong>The ground</strong> &mdash; what makes the path possible
+            <ul>
+              <li><span data-term="buddha-nature">Buddha-nature</span> &mdash; the innate potential practice uncovers</li>
+            </ul>
+          </li>
+          <li><strong>Turning the mind</strong> &mdash; orienting toward practice
+            <ul>
+              <li><span data-term="four-thoughts">Four Thoughts</span> &mdash; turn the mind toward practice</li>
+              <li><span data-term="three-jewels">Three Jewels</span> &mdash; the objects of refuge</li>
+              <li><span data-term="bodhicitta">Bodhicitta</span> &mdash; the awakening motivation</li>
+            </ul>
+          </li>
+          <li><strong>Foundation &mdash; Ng&ouml;ndro</strong> &mdash; purify &amp; accumulate (each &times;111,111)
+            <ul>
+              <li><span data-term="ngondro">Ng&ouml;ndro</span> &mdash; the four foundational practices, containing:
+                <ul>
+                  <li><span data-term="prostration">Refuge &amp; prostrations</span> &mdash; purifies pride</li>
+                  <li>Vajrasattva &mdash; purification (100-syllable mantra)</li>
+                  <li><span data-term="mandala">Mandala offerings</span> &mdash; gathers merit</li>
+                  <li><span data-term="guru-yoga">Guru Yoga</span> &mdash; in Diamond Way, the 16th Karmapa Meditation</li>
+                </ul>
+              </li>
+              <li><span data-term="two-accumulations">Two Accumulations</span> &mdash; <strong>merit</strong> + <strong>wisdom</strong></li>
+            </ul>
+          </li>
+          <li><strong>Calm &amp; insight</strong> &mdash; the meditative engine, running throughout
+            <ul>
+              <li><span data-term="shamatha">Shamatha</span> &mdash; calming the mind (shinay)</li>
+              <li><span data-term="vipashyana">Vipashyana</span> &mdash; insight (lhaktong)</li>
+            </ul>
+          </li>
+          <li><strong>Deity practice</strong> &mdash; identification with enlightened qualities
+            <ul>
+              <li><span data-term="wang">Empowerment</span> &mdash; authorizes a yidam practice (wang)</li>
+              <li><span data-term="yidam">Yidam</span> &mdash; deity practice: visualization + mantra</li>
+            </ul>
+          </li>
+          <li><strong>Advanced yogas</strong> &mdash; lineage inheritance; three-year retreat
+            <ul>
+              <li>Six Yogas of N&#257;ropa &mdash; advanced; mostly three-year retreat, containing:
+                <ul>
+                  <li><span data-term="tummo">Tummo</span> &mdash; inner heat</li>
+                  <li><span data-term="gyulu">Illusory body</span> &mdash; gyul&uuml;</li>
+                  <li><span data-term="milam">Dream yoga</span> &mdash; milam</li>
+                  <li><span data-term="osel">Clear light</span> &mdash; &ouml;sel</li>
+                  <li><span data-term="bardo">Bardo yoga</span> &mdash; the intermediate state</li>
+                  <li><span data-term="phowa">Phowa</span> &mdash; transference at death</li>
+                </ul>
+              </li>
+              <li><span data-term="pure-land">Pure Land</span> &mdash; Amit&#257;bha's Dewachen</li>
+            </ul>
+          </li>
+          <li><strong>Fruition &mdash; the View</strong> &mdash; direct recognition of mind
+            <ul>
+              <li><span data-term="emptiness">Emptiness</span> &mdash; no independent existence</li>
+              <li><span data-term="nature-of-mind">Nature of Mind</span> &mdash; emptiness &oplus; clarity</li>
+              <li><span data-term="chagchen">Mah&#257;mudr&#257;</span> &mdash; the Great Seal &mdash; the fruition</li>
+            </ul>
+          </li>
+        </ol>
+
+        <table class="cmap-rel-table">
+          <caption>Every relationship in the map (17 in all). Containment (a practice inside Ng&ouml;ndro or the Six Yogas) is shown by grouping above, not as a row here.</caption>
+          <thead><tr><th scope="col">From</th><th scope="col">relationship</th><th scope="col">To</th></tr></thead>
+          <tbody>
+            <tr><td>Four Thoughts</td><td>feeds</td><td>Ng&ouml;ndro</td></tr>
+            <tr><td>Three Jewels</td><td>feeds</td><td>Ng&ouml;ndro</td></tr>
+            <tr><td>Bodhicitta</td><td>feeds</td><td>Ng&ouml;ndro</td></tr>
+            <tr><td>Ng&ouml;ndro</td><td>feeds</td><td>Two Accumulations</td></tr>
+            <tr><td>Two Accumulations</td><td>feeds &mdash; basis for</td><td>Yidam</td></tr>
+            <tr><td>Two Accumulations</td><td>feeds &mdash; basis for</td><td>Six Yogas of N&#257;ropa</td></tr>
+            <tr><td>Empowerment</td><td>requires &mdash; authorizes</td><td>Yidam</td></tr>
+            <tr><td>Shamatha</td><td>feeds</td><td>Vipashyana</td></tr>
+            <tr><td>Shamatha</td><td>supports &mdash; steadies visualization</td><td>Yidam</td></tr>
+            <tr><td>Vipashyana</td><td>feeds</td><td>Nature of Mind</td></tr>
+            <tr><td>Yidam</td><td>feeds</td><td>Mah&#257;mudr&#257;</td></tr>
+            <tr><td>Guru Yoga</td><td>feeds &mdash; condensed gateway</td><td>Mah&#257;mudr&#257;</td></tr>
+            <tr><td>Phowa</td><td>feeds &mdash; transference</td><td>Pure Land</td></tr>
+            <tr><td>Six Yogas of N&#257;ropa</td><td>secondary &mdash; serve realization</td><td>Mah&#257;mudr&#257;</td></tr>
+            <tr><td>Emptiness</td><td>feeds</td><td>Nature of Mind</td></tr>
+            <tr><td>Nature of Mind</td><td>feeds &mdash; recognized as</td><td>Mah&#257;mudr&#257;</td></tr>
+            <tr><td>Buddha-nature</td><td>secondary &mdash; what is uncovered</td><td>Nature of Mind</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <!-- ================ TAB 2 — LINEAGE & CONTROVERSY ====================
+         Four merged sections in reading order: the three-way distinction (the
+         lead/intro), then the Lineage (golden rosary + tree), the Karmapa &
+         Black Crown, and the Karmapa Controversy (two claimants + the
+         reconciliation diagram). Each merged sub-section keeps its own
+         section-head as an in-panel opener. -->
+    <section id="panel-lineage" class="tab-panel container reading-panel"
+             role="tabpanel" aria-labelledby="tab-lineage" tabindex="0" hidden>
+
+      <!-- Lead/intro — the core distinction (§4.1) -->
+      <div id="distinction" class="panel-section panel-lead">
+      <div class="section-head"><p class="eyebrow">The spine of the whole subject</p><h2>Three things, often confused</h2></div>
+      <div class="prose">
+        <p>Almost every misunderstanding of this topic comes from collapsing three separate things into one. Pulling them apart is the first and most useful move.</p>
+        <dl class="distinction-list">
+          <dt><span data-term="karma-kagyu">ཀརྨ་བཀའ་བརྒྱུད་</span> &mdash; Karma Kagyu</dt>
+          <dd>A roughly 900-year-old Tibetan Buddhist <em>lineage</em> — the largest sub-school of the broader <span data-term="kagyu">བཀའ་བརྒྱུད་</span> tradition, headed by the Karmapa. It is monastic and yogic: real monasteries, abbots, a scholastic curriculum, and three-year retreats, now found across Tibet, India, Nepal, Bhutan and worldwide.</dd>
+          <dt>Diamond Way Buddhism</dt>
+          <dd>Something far more specific: a worldwide network of <em>lay</em> (non-monastic) centers founded in the early 1970s by the Danish teacher <strong>Ole Nydahl</strong> (&ldquo;Lama Ole,&rdquo; 1941&ndash;2026) and his wife <strong>Hannah Nydahl</strong> (1946&ndash;2007), at the request of the 16th Karmapa. By Ole Nydahl's death it numbered on the order of 600&ndash;650 centers in more than 40 countries.</dd>
+          <dt>Vajray&#257;na</dt>
+          <dd>The tantric &ldquo;diamond vehicle&rdquo; of Buddhism as a whole (Sanskrit <em>vajra</em> = diamond / thunderbolt, <em>y&#257;na</em> = vehicle). &ldquo;Diamond Way&rdquo; is simply the plain-English rendering of this word — which is the naming trap: lowercase, it means all of Vajray&#257;na; capitalized, it means Nydahl's organization.</dd>
+        </dl>
+        <p class="callout">In one sentence: <strong>Diamond Way is one modern, Western, lay organization operating within the older Karma Kagyu lineage — and it sides with one party in a contested succession dispute inside that lineage.</strong></p>
+      </div>
+      </div><!-- /#distinction -->
+
+      <!-- 2. THE LINEAGE — the golden rosary; interactive transmission tree (D3) -->
+      <div id="lineage" class="panel-section">
+      <div class="section-head"><p class="eyebrow">The golden rosary</p><h2>The Lineage</h2></div>
+      <div class="prose">
+        <p>Tibetan Buddhism is conventionally divided into four schools: the &ldquo;old&rdquo; Nyingma and the three &ldquo;new&rdquo; schools — Kagyu, Sakya and Gelug. <span data-term="kagyu">བཀའ་བརྒྱུད་</span> (Kagyu) is usually glossed as the lineage of the Buddha's <em>word</em>, or more evocatively the <strong>oral, whispered transmission</strong> — a tradition that prizes the direct passing of meditative realization from teacher to student over textual scholasticism.</p>
+        <p>Its founding line, the <span data-term="gser-phreng">གསེར་ཕྲེང་</span> or &ldquo;golden rosary,&rdquo; runs from a primordial buddha through a chain of Indian <span data-term="mahasiddha">adepts</span> and Tibetan masters into the line of the Karmapas. Each is a bead on the rosary; the trunk is unbroken.</p>
+      </div>
+
+      <!-- D3 transmission tree mounts here; accessible table fallback below it -->
+      <figure class="viz-figure">
+        <figcaption id="lineage-cap">The transmission lineage from Vajradhara to the two contested 17th Karmapas. Hover or focus a node for its dates and role.</figcaption>
+        <div id="lineage-tree" class="viz" role="img" aria-labelledby="lineage-cap" data-viz="lineage"></div>
+      </figure>
+      <details class="viz-fallback">
+        <summary>Lineage as a table</summary>
+        <table>
+          <caption>The golden rosary — order of transmission</caption>
+          <thead><tr><th scope="col">#</th><th scope="col">Figure</th><th scope="col">Dates</th><th scope="col">Role</th></tr></thead>
+          <tbody>
+            <tr><td>—</td><td>Vajradhara (<span data-term="dorje-chang">རྡོ་རྗེ་འཆང་</span>)</td><td>primordial</td><td><em>Dharmak&#257;ya</em> buddha; symbolic source of the transmission</td></tr>
+            <tr><td>1</td><td><span data-term="tilopa">Tilopa</span></td><td>988&ndash;1069</td><td>Indian <em>mah&#257;siddha</em>; received teachings attributed to Vajradhara</td></tr>
+            <tr><td>2</td><td><span data-term="naropa">N&#257;ropa</span></td><td>1016&ndash;1100</td><td>Tilopa's chief disciple; abbot of N&#257;land&#257; turned yogi; systematized the Six Yogas</td></tr>
+            <tr><td>3</td><td><span data-term="marpa">Marpa Lots&#257;wa</span></td><td>1012&ndash;1097</td><td>&ldquo;the translator&rdquo;; carried the tantric transmissions from India to Tibet</td></tr>
+            <tr><td>4</td><td><span data-term="milarepa">Milarepa</span></td><td>1052&ndash;1135</td><td>yogi-poet; enlightenment in one lifetime; the <em>Hundred Thousand Songs</em></td></tr>
+            <tr><td>5</td><td><span data-term="gampopa">Gampopa</span></td><td>1079&ndash;1153</td><td>fused yogic Mah&#257;mudr&#257; with the monastic gradual path; institutional founder of the Kagyu school</td></tr>
+            <tr><td>6</td><td><span data-term="dusum-khyenpa">Düsum Khyenpa</span> — 1st Karmapa</td><td>1110&ndash;1193</td><td>founded the Karma Kagyu; established Tsurphu</td></tr>
+            <tr><td>7</td><td>Karma Pakshi — 2nd Karmapa</td><td>1204&ndash;1283</td><td>first formally recognized <span data-term="tulku">སྤྲུལ་སྐུ་</span>; active at the Mongol court</td></tr>
+            <tr><td>…</td><td>intervening Karmapas (incl. the 5th, of the Black Crown era)</td><td>—</td><td>unbroken line, rendered as unlabeled beads</td></tr>
+            <tr><td>16</td><td>Rangjung Rigpe Dorje — 16th Karmapa</td><td>1924&ndash;1981</td><td>left Tibet after 1959; re-established the seat at Rumtek; brought Karma Kagyu West; his death triggers the split</td></tr>
+            <tr><td>17?</td><td>Ogyen Trinley Dorje</td><td>b. 1985</td><td>recognized by Tai Situ &amp; Gyaltsab; held by the large majority</td></tr>
+            <tr><td>17?</td><td>Trinley Thaye Dorje</td><td>b. 1983</td><td>recognized by the 14th Shamarpa; followed by Diamond Way</td></tr>
+          </tbody>
+        </table>
+      </details>
+      </div><!-- /#lineage -->
+
+      <!-- 3. THE KARMAPA & THE BLACK CROWN (§4.3) -->
+      <div id="karmapa" class="panel-section">
+      <div class="section-head"><p class="eyebrow">The Black Crown Lama</p><h2>The Karmapa &amp; the Black Crown</h2></div>
+      <div class="prose">
+        <p>The Karmapa (<span data-term="karmapa">ཀརྨ་པ་</span>) is popularly the <strong>Black Crown Lama</strong>. Tradition holds that he wears an immaterial &ldquo;wisdom crown&rdquo; woven from the hair of <em>&#7693;&#257;kin&#299;s</em>, perceptible only to the realized. A physical <span data-term="black-crown"><strong>Vajra (Black) Crown</strong></span> — a material replica — was, by tradition, gifted by the Ming Yongle Emperor to the 5th Karmapa in the early 1400s. The ceremonial display of it, the <strong>Black Crown Ceremony</strong>, was held to confer liberation on those who witnessed it, and became a signature public rite of the 16th Karmapa's tours of the West.</p>
+        <p>The Karmapa line carries a deeper institutional first. It is generally regarded as <strong>the earliest formally recognized reincarnate-teacher (<span data-term="tulku">སྤྲུལ་སྐུ་</span>) lineage</strong> — the model later used for the Dalai Lamas and thousands of other <em>tulkus</em>. The <strong>2nd Karmapa, Karma Pakshi</strong> (1204&ndash;1283), was the first recognized this way, and was a noted figure at the Mongol court of Möngke and Kublai Khan.</p>
+        <p>Around the Karmapa stand a set of high reincarnate lines that recognize one another and administer the lineage during a Karmapa's minority — the &ldquo;four regents.&rdquo; The most important are the <strong><span data-term="shamarpa">ཞྭ་དམར་པ་</span> (Shamarpa)</strong>, the &ldquo;Red Crown&rdquo; lama historically regarded as a near-counterpart to the Karmapa (the 14th, Mipham Chökyi Lodrö, 1952&ndash;2014, is central to the modern dispute); <strong>Tai Situ Rinpoche</strong> (the 12th, Pema Donyö Nyinje, b. 1954); <strong>Gyaltsab Rinpoche</strong>; and <strong>Jamgön Kongtrul Rinpoche</strong>. The honorific <span data-term="rinpoche">རིན་པོ་ཆེ་</span>, &ldquo;precious one,&rdquo; marks these recognized masters.</p>
+        <p>The lineage's seats trace a history of exile: from <strong>Tsurphu</strong>, the historic main seat in central Tibet, to <strong>Rumtek</strong> in Sikkim, India, re-established after 1959 — and itself now a focus of the succession litigation.</p>
+      </div>
+      </div><!-- /#karmapa -->
+
+      <!-- 4. THE KARMAPA CONTROVERSY (§4.5) — interactive branching diagram (D3) -->
+      <div id="controversy" class="panel-section">
+      <div class="section-head"><p class="eyebrow">Two recognitions</p><h2>The Karmapa Controversy</h2></div>
+      <div class="prose">
+        <p>You cannot place Diamond Way in the Buddhist world without this dispute, because it sits firmly on one side of it. When the 16th Karmapa died in 1981 with no universally accepted recognition of his successor, the process of finding the reincarnation fractured. By the early 1990s the result was two <strong>separately enthroned claimants to the title of 17th Karmapa</strong>.</p>
+        <p><strong>This site takes no position on who is &ldquo;the&rdquo; Karmapa.</strong> Both are presented in parallel, with recognitions attributed to whoever made them.</p>
+      </div>
+
+      <div class="claimants">
+        <article class="claimant">
+          <h3>Ogyen Trinley Dorje <span class="b-year">b. 1985</span></h3>
+          <ul>
+            <li>Recognized by <strong>Tai Situ Rinpoche</strong> &amp; Gyaltsab Rinpoche, on the basis of a prediction letter attributed to the 16th Karmapa.</li>
+            <li>Confirmed by the <strong>14th Dalai Lama</strong>; accepted by the <strong>Chinese government</strong>.</li>
+            <li>Enthroned at Tsurphu in 1992; fled Tibet for India in 2000.</li>
+            <li>Holds the recognition of the <strong>large majority</strong> of Karma Kagyu monasteries and lamas. (Critics' label: &ldquo;Beijing Karmapa.&rdquo;)</li>
+            <li>Official site: <a href="https://kagyuoffice.org/" rel="noopener">kagyuoffice.org</a></li>
+          </ul>
+        </article>
+        <article class="claimant">
+          <h3>Trinley Thaye Dorje <span class="b-year">b. 1983</span></h3>
+          <ul>
+            <li>Recognized by the <strong>14th Shamarpa</strong>, who disputed the prediction letter's authenticity.</li>
+            <li>Brought out of Tibet to India in 1994.</li>
+            <li><strong>Stepped back from the monastic role to marry in 2017</strong> (wife Rinchen Yangzom; son Thugsey); teaches as a lay-friendly Karmapa.</li>
+            <li>Backed by an <strong>influential minority</strong> — most prominently <strong>Diamond Way</strong>.</li>
+            <li>Official site: <a href="https://www.karmapa.org/" rel="noopener">karmapa.org</a></li>
+          </ul>
+        </article>
+      </div>
+
+      <figure class="viz-figure">
+        <figcaption id="ctrl-cap">The split after 1981 into two recognitions, and the steps toward reconciliation (2018 meeting; 2023 joint statement). Hover or focus a node for detail.</figcaption>
+        <div id="controversy-diagram" class="viz" role="img" aria-labelledby="ctrl-cap" data-viz="controversy"></div>
+      </figure>
+      <details class="viz-fallback">
+        <summary>Reconciliation timeline as a table</summary>
+        <table>
+          <caption>From the split to the reconciliation steps</caption>
+          <thead><tr><th scope="col">Year</th><th scope="col">Event</th></tr></thead>
+          <tbody>
+            <tr><td>1981</td><td>16th Karmapa dies in Zion, Illinois; no universally accepted successor.</td></tr>
+            <tr><td>1992</td><td>Ogyen Trinley Dorje recognized (Tai Situ / Gyaltsab) and enthroned at Tsurphu.</td></tr>
+            <tr><td>1994</td><td>Trinley Thaye Dorje (recognized by the 14th Shamarpa) brought to India.</td></tr>
+            <tr><td>2000</td><td>Ogyen Trinley Dorje flees Tibet for India.</td></tr>
+            <tr><td>2017</td><td>Thaye Dorje steps back from the monastic role to marry.</td></tr>
+            <tr><td>2018</td><td>The two men meet for the first time, in France.</td></tr>
+            <tr><td>Dec 2023</td><td>Joint statement: they will <em>jointly</em> recognize and educate the next (15th) Shamarpa.</td></tr>
+            <tr><td>ongoing</td><td>Rumtek Monastery control remains in long-running litigation; full reunification unresolved.</td></tr>
+          </tbody>
+        </table>
+      </details>
+
+      <div class="prose">
+        <p class="callout">When Diamond Way materials say &ldquo;the 17th Karmapa,&rdquo; they mean <strong>Thaye Dorje</strong>. Most other Karma Kagyu institutions mean <strong>Ogyen Trinley Dorje</strong>. Neither side disputes that the lineage and its teachings are shared; the dispute is over the person.</p>
+      </div>
+      </div><!-- /#controversy -->
+    </section><!-- /#panel-lineage -->
+
+    <!-- ============== TAB 3 — DIAMOND WAY & CRITICISM ====================
+         Two merged sections: Diamond Way (the Western lay transmission, §4.4)
+         then Teaching Style & Critical Perspectives (§4.7). -->
+    <section id="panel-diamond-way" class="tab-panel container reading-panel"
+             role="tabpanel" aria-labelledby="tab-diamond-way" tabindex="0" hidden>
+
+      <!-- 4. DIAMOND WAY (§4.4) — recently deceased founder; §8 care -->
+      <div id="diamond-way" class="panel-section panel-lead">
+      <div class="section-head"><p class="eyebrow">A Western lay transmission</p><h2>Diamond Way</h2></div>
+      <div class="prose">
+        <p>In <strong>1968</strong> Ole and Hannah Nydahl, a young Danish couple, traveled to Nepal and met Tibetan teachers; in <strong>1969</strong> they became, by their own account, among the first Western students of the <strong>16th Karmapa</strong>. After a period of study and practice — including the meditation of conscious dying, <span data-term="phowa">འཕོ་བ་</span> — the Karmapa asked them to return to Europe and begin founding lay centers, establishing Karma Kagyu practice for Western householders.</p>
+        <p>From the first center in the early 1970s the network grew steadily across five decades. Ole Nydahl became a near-constant traveler and was eventually recognized as a <span data-term="lama">བླ་མ་</span> — one of very few Westerners to hold that role within the tradition. Hannah Nydahl worked extensively as a translator for high Tibetan lamas and was a quieter but essential architect of the movement until her death from cancer in 2007; her life is the subject of the documentary <em>Hannah: Buddhism's Untold Story</em>.</p>
+        <p>The organization's distinctive profile: <strong>lay, not monastic</strong> — members have jobs, families and ordinary lives; <strong>volunteer-run and decentralized</strong>, with no paid clergy; bound for its whole history by a <strong>single principal teacher</strong> and the travelling teachers he authorized; and marked by an emphasis on accessibility, directness and a confident, this-worldly tone.</p>
+        <p class="callout transition">In <strong>2026</strong> the founder's era closed. Ole Nydahl turned 85 on 19 March and <strong>died on 18 May 2026</strong> at the Europe Center in Immenstadt, in the Bavarian Alps, with family present and students having gathered to meditate in the preceding weeks. After the traditional post-death meditative process (<span data-term="thugdam">ཐུགས་དམ་</span>), <strong>Thaye Dorje — whom Diamond Way recognizes as the 17th Karmapa — opened the farewell ceremonies on 21 May 2026</strong>. A network of some 600 centers built around one founder now faces the classic question of continuity after a charismatic founder. As of late May 2026 this is live, unfolding history.</p>
+      </div>
+      </div><!-- /#diamond-way -->
+
+      <!-- 7. TEACHING STYLE & CRITICAL PERSPECTIVES (§4.7) — balanced (§8 guardrails) -->
+      <div id="teaching" class="panel-section">
+      <div class="section-head"><p class="eyebrow">Balanced, sourced</p><h2>Teaching Style &amp; Critical Perspectives</h2></div>
+      <div class="prose">
+        <p>Ole Nydahl was, and remains after his death in May 2026, a genuinely contested figure — admired and criticized in roughly equal measure, often for the very same things. What follows gives fair weight to each thread, and resists both hagiography and takedown.</p>
+
+        <h3>Style and biography</h3>
+        <p>An ex-boxer from Copenhagen, Nydahl was candid in his autobiography that before his conversion he and Hannah funded their travels partly by smuggling hashish, and that he served prison time — he framed his life as proof that a &ldquo;tough guy&rdquo; could transform. Onstage he was high-energy, blunt, funny and deliberately provocative, talking frankly about sex and death; he remained an avid motorcyclist and skydiver into old age, surviving a near-fatal parachute accident in 2003. Followers found this liberating — a Buddhism for confident, worldly people. Critics found it shallow, with some attendees describing his Mah&#257;mudr&#257; courses as rambling between recited verses.</p>
+
+        <h3>The teaching on sexuality</h3>
+        <p>Because Diamond Way practitioners are lay yogis, disturbing emotions — desire included — are treated as raw material for enlightenment rather than something to suppress. Nydahl framed the Buddha's teaching on sexuality in three levels: monastic celibacy, for those who struggle with relationships; ordinary lay partnership, built on mutual joy and the classic tantric &ldquo;diamond&rdquo; and &ldquo;lotus&rdquo; imagery; and an advanced &ldquo;accomplisher&rdquo; level of consciously steering subtle energies, which he said required mastery of practices such as inner heat first.</p>
+
+        <h3>The criticisms</h3>
+        <p>The serious objection is this: Nydahl acknowledged sexual relationships with female students, arguing that no teacher&ndash;student relationship was involved in them — which critics rejected, because the lama / devotee power asymmetry does not simply switch off. Former members described the culture as elitist and sexist. The scholar <strong>Burkhard (Bee) Scherer</strong> analyzes a pervasive <strong>&ldquo;hetero-machismo,&rdquo;</strong> pre-modern gender stereotyping and a mildly homophobic tone; one influential 2011 study is titled <em>&ldquo;Macho Buddhism.&rdquo;</em> A broader critique bundles a hedonism-and-extreme-sports image (dubbed &ldquo;lifestyle Buddhism&rdquo;), militaristic aesthetics, and anti-Islam political rhetoric. The mixing of sex and teaching sparked a semi-public 2010 disagreement with the 14th Shamarpa.</p>
+        <p class="positionality"><strong>A note on positionality:</strong> Scherer is himself a Karma Kagyu practitioner under Thaye Dorje, with former Diamond Way ties — a vantage point worth keeping in view when weighing the analysis.</p>
+
+        <h3>The scholarly middle ground</h3>
+        <p>It is important to resist equating this with the documented abuse scandals at Rigpa (Sogyal Rinpoche) or Shambhala. Scherer explicitly argues that the reality is <strong>more complex and less sensationalist</strong>: the relationships were, on the public record, between adults, and were not subject to the coercion-and-cover-up allegations that brought down those groups. The substantive objection is <strong>structural — about power and consent — together with gender politics, not documented predation.</strong></p>
+        <p class="callout">A fair verdict: a teacher whose deliberate breaking of the &ldquo;holy guru&rdquo; template drove both his enormous appeal and the steady criticism — and on which informed people, including scholars sympathetic to his lineage, genuinely land differently.</p>
+      </div>
+      </div><!-- /#teaching -->
+    </section><!-- /#panel-diamond-way -->
+
+    <!-- ===================== TAB 4 — PRACTICES =========================== -->
+    <section id="panel-practices" class="tab-panel container reading-panel"
+             role="tabpanel" aria-labelledby="tab-practices" tabindex="0" hidden>
+      <div class="panel-section panel-lead">
+      <div class="section-head"><p class="eyebrow">Foundation &rarr; guru yoga &rarr; deity &rarr; Mah&#257;mudr&#257;</p><h2>Practices</h2></div>
+      <div class="prose">
+        <p>Diamond Way teaches a path that is recognizably Karma Kagyu in content, organized for lay practitioners. Its architecture is the classic <span data-term="vajrayana">Vajray&#257;na</span> sequence — <strong>foundation &rarr; <span data-term="guru-yoga">guru yoga</span> &rarr; deity practice &rarr; <span data-term="chagchen">Mah&#257;mudr&#257;</span></strong> — with <strong>Phowa</strong> as a signature.</p>
+        <p>At the level of method, Diamond Way describes meditation as two movements: first <span data-term="shamatha">calming the mind</span> (Tibetan <em>shinay</em>), then the <span data-term="vipashyana">insight</span> (Tibetan <em>lhaktong</em>) that recognizes the nature of mind itself.</p>
+      </div>
+
+      <h3 class="prac-h"><span data-term="ngondro">སྔོན་འགྲོ་</span> Ng&ouml;ndro — the foundations</h3>
+      <p class="prose">&ldquo;That which goes before&rdquo;: four foundational practices, each traditionally accumulated <strong>111,111</strong> times (the extra digits &ldquo;for mistakes&rdquo;). Together they purify obscurations and gather the <span data-term="two-accumulations">two accumulations</span> of <strong><span data-term="merit">merit</span></strong> and <strong>wisdom</strong>.</p>
+      <ol class="ngondro" id="ngondro-panel" aria-label="The four foundational practices">
+        <li data-count="111,111">
+          <span class="ng-n">1</span>
+          <h4>Refuge &amp; prostrations</h4>
+          <p>Going for refuge (<span data-term="kyabdro">སྐྱབས་འགྲོ་</span>) to the <span data-term="three-jewels">Three Jewels</span> and the lineage, with full-body <span data-term="prostration">prostrations</span>; purifies pride.</p>
+        </li>
+        <li data-count="111,111">
+          <span class="ng-n">2</span>
+          <h4>Vajrasattva (Dorje Sempa)</h4>
+          <p>Purification through the buddha Vajrasattva and his 100-syllable mantra — cleansing harmful impressions.</p>
+        </li>
+        <li data-count="111,111">
+          <span class="ng-n">3</span>
+          <h4><span data-term="mandala">Mandala</span> offerings</h4>
+          <p>Symbolically offering the entire universe; cultivates generosity and gathers merit.</p>
+        </li>
+        <li data-count="111,111">
+          <span class="ng-n">4</span>
+          <h4>Guru yoga</h4>
+          <p>Uniting one's mind with the enlightened mind of the lama and lineage — in Diamond Way, the 16th Karmapa meditation.</p>
+        </li>
+      </ol>
+
+      <h3 class="prac-h">The 16th Karmapa Meditation — the daily guru yoga</h3>
+      <p class="prose">The defining everyday practice of Diamond Way: <span data-term="visualization">visualize</span> the <span data-term="sixteenth-karmapa-meditation">16th Karmapa</span> in his Black Crown form, receive the lights of his body, speech and mind, dissolve the form into oneself, and rest in the resulting state. It binds a global lay <span data-term="gendun">དགེ་འདུན་</span> (sangha) together and serves as a condensed gateway to Mah&#257;mudr&#257;.</p>
+
+      <!-- FEATURED PHOWA BLOCK — gets the syllable-walk animation (Phowa only, behind prefers-reduced-motion) -->
+      <article class="phowa-feature" aria-labelledby="phowa-h">
+        <p class="eyebrow">Featured practice</p>
+        <h3 id="phowa-h">Phowa — the meditation of conscious dying</h3>
+        <div class="phowa-glyph">
+          <span class="tib-display phowa-tib" lang="bo" id="phowa-walk">འཕོ་བ་</span>
+          <p class="phowa-rom"><span class="phonetic">Phowa</span> · <span class="wylie">'pho ba</span> · &ldquo;transference&rdquo;</p>
+        </div>
+        <div class="prose">
+          <p><span data-term="phowa">འཕོ་བ་</span> is the practice of consciously ejecting consciousness at the moment of death through the crown of the head into a pure realm — the buddha <span data-term="amitabha">Amit&#257;bha</span>'s <span data-term="pure-land">pure land of <em>Dewachen</em> (Sukh&#257;vat&#299;)</span>. It is one of the Six Yogas of N&#257;ropa and, in the Karma Kagyu, can be transmitted relatively accessibly.</p>
+          <p>Ole Nydahl began teaching Phowa in <strong>1987 at the request of Shamar Rinpoche</strong> and transmitted it to tens of thousands of people in intensive courses; mastery of Phowa was a major part of his public identity and one of Diamond Way's signature offerings.</p>
+        </div>
+      </article>
+
+      <h3 class="prac-h"><span data-term="yidam">ཡི་དམ་</span> Yidam — deity practice</h3>
+      <p class="prose">After Ng&ouml;ndro, with <span data-term="wang">དབང་</span> (empowerment), a practitioner may take up a <em>yidam</em>: a meditational buddha-form embodying an enlightened quality — <span data-term="chenrezig">སྤྱན་རས་གཟིགས་</span> (Chenrezig / Avalokite&#347;vara) for compassion, Tara for active protection, Vajrasattva for purification. The method is visualization, <span data-term="mantra">mantra</span>, and identification with the deity as a reflection of one's own enlightened nature.</p>
+
+      <h3 class="prac-h"><span data-term="chagchen">ཕྱག་ཆེན་</span> Mah&#257;mudr&#257; — the Great Seal</h3>
+      <p class="prose">The culminating view and meditation of the Kagyu lineage — its crown jewel. A direct recognition of the <span data-term="nature-of-mind">nature of mind</span> as the inseparable union of <span data-term="emptiness">emptiness</span> and luminous awareness, beyond conceptual elaboration. It is approached by <em>s&#363;tra</em> (analytical), <span data-term="tantra"><em>tantra</em></span> (energy / yidam-based), or <em>essence</em> (direct introduction by a qualified lama) routes.</p>
+
+      <h3 class="prac-h">The Six Yogas of <span data-term="naropa">N&#257;ropa</span></h3>
+      <p class="prose">The advanced yogic curriculum of the Kagyu — typically undertaken in <span data-term="three-year-retreat">three-year retreat</span>, part of the lineage's inheritance more than everyday lay content. Phowa is the sixth. Here a <span data-term="yoga">yoga</span> (Tibetan <em>naljor</em>, &ldquo;union&rdquo;) is a discipline of practice that joins one with enlightened reality, not a set of physical postures.</p>
+      <ul class="yoga-cards" aria-label="The Six Yogas of Nāropa">
+        <li><span class="y-tib" data-term="tummo" lang="bo">གཏུམ་མོ་</span><h4>Tummo</h4><p>Inner heat — manipulating the subtle body's channels, winds and drops.</p></li>
+        <li><span class="y-tib" data-term="gyulu" lang="bo">སྒྱུ་ལུས་</span><h4>Illusory body (Gyul&uuml;)</h4><p>Recognizing the dream-like, illusory nature of body and phenomena.</p></li>
+        <li><span class="y-tib" data-term="milam" lang="bo">རྨི་ལམ་</span><h4>Dream yoga (Milam)</h4><p>Achieving lucidity and practicing within the dream state.</p></li>
+        <li><span class="y-tib" data-term="osel" lang="bo">འོད་གསལ་</span><h4>Clear light (&Ouml;sel)</h4><p>Recognizing the luminous nature of mind, especially in deep sleep and at death.</p></li>
+        <li><span class="y-tib" data-term="bardo" lang="bo">བར་དོ་</span><h4>Bardo yoga</h4><p>Practice for the intermediate state between death and rebirth.</p></li>
+        <li><span class="y-tib" data-term="phowa" lang="bo">འཕོ་བ་</span><h4>Phowa</h4><p>Transference of consciousness at death — the signature practice above.</p></li>
+      </ul>
+      </div><!-- /practices lead -->
+    </section><!-- /#panel-practices -->
+
+    <!-- Tab 5 — Glossary — is the /glossary/ route, reached via the header tab
+         link (no in-page panel). The former #glossary-cta is dropped: the tab
+         replaces it. -->
+
+    <!-- ===================== TAB 6 — SOURCES ============================= -->
+    <!-- 9. FURTHER READING & SOURCES (§10) -->
+    <section id="panel-sources" class="tab-panel container reading-panel"
+             role="tabpanel" aria-labelledby="tab-sources" tabindex="0" hidden>
+      <div class="panel-section panel-lead">
+      <div class="section-head"><p class="eyebrow">Read further</p><h2>Further Reading &amp; Sources</h2></div>
+      <div class="sources-grid">
+        <div class="source-col">
+          <h3>On the lineage &amp; the dispute</h3>
+          <ul>
+            <li>Mick Brown, <em>The Dance of 17 Lives</em> — narrative history of the Karmapas &amp; the dispute (sympathetic to Ogyen Trinley Dorje).</li>
+            <li>Lea Terhune, <em>Karmapa: The Politics of Reincarnation</em>.</li>
+          </ul>
+        </div>
+        <div class="source-col">
+          <h3>Traditional</h3>
+          <ul>
+            <li><em>The Life of Milarepa</em> &amp; <em>The Hundred Thousand Songs of Milarepa</em> (trans. Lhalungpa / Garma C. C. Chang).</li>
+          </ul>
+        </div>
+        <div class="source-col">
+          <h3>From within (Ole Nydahl)</h3>
+          <ul>
+            <li><em>The Way Things Are</em>; <em>Entering the Diamond Way</em>; <em>The Great Seal</em>; <em>Riding the Tiger</em>.</li>
+          </ul>
+        </div>
+        <div class="source-col">
+          <h3>Scholarly</h3>
+          <ul>
+            <li>Burkhard / Bee Scherer — articles including &ldquo;Macho Buddhism&rdquo; (2011) and the neo-orthodoxy essays. <em>(Practitioner under Thaye Dorje; former Diamond Way ties.)</em></li>
+          </ul>
+        </div>
+        <div class="source-col span-2">
+          <h3>Both claimants, in their own words</h3>
+          <p>Reading both is the fastest way to feel the shape of the disagreement.</p>
+          <div class="claimant-links">
+            <a class="claimant-link" href="https://kagyuoffice.org/" rel="noopener"><strong>kagyuoffice.org</strong><span>Ogyen Trinley Dorje</span></a>
+            <a class="claimant-link" href="https://www.karmapa.org/" rel="noopener"><strong>karmapa.org</strong><span>Trinley Thaye Dorje</span></a>
+          </div>
+        </div>
+      </div>
+      </div><!-- /sources lead -->
+    </section><!-- /#panel-sources -->
+  </main>
+
+  <footer class="container">
+    <p>The Path — an educational reference. Compiled May 2026; the contemporary picture is unfolding history. Every Tibetan string is verified against authoritative sources (code-point analysis plus Wikipedia / Wiktionary&nbsp;bo / Rangjung&nbsp;Yeshe); where a glyph is unconfirmed it is shown in Wylie and flagged.</p>
+  </footer>
+
+  <!-- d3 v7 self-hosted (UMD global). Classic script so window.d3 is set before the module reads it. -->
+  <script src="/src/vendor/d3.min.js?v=e8e6cea4" defer></script>
+  <script type="module" src="/src/main.js?v=e8e6cea4"></script>
+  <script type="module" src="/src/pwa.js?v=e8e6cea4"></script>
+</body>
+</html>

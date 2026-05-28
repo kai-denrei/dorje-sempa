@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Internal project memory (deban decision log) — not part of the published site
+.deban/
+
+# Internal build briefs — the site itself is the deliverable
+handover.md
+karma-kagyu-diamond-way.md

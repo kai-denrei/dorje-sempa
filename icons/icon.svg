@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="The Path — golden rosary on a maroon ground">
+  <title>The Path</title>
+  <!-- Maroon rounded-square ground (site --maroon #7a3a31) -->
+  <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="#7a3a31"/>
+  <!-- Subtle inner deepening for depth (site --maroon-deep #5a2922) -->
+  <rect x="0" y="0" width="512" height="512" rx="112" ry="112" fill="none"
+        stroke="#5a2922" stroke-width="10" opacity="0.55"/>
+
+  <!-- The golden rosary (gser phreng): a vertical chain of beads descending the
+       path, with a head-line motif (dbu-can) up top. Gold #e6b94f / saffron #e0a23c. -->
+  <g fill="none" stroke="#e6b94f" stroke-linecap="round">
+    <!-- head-line motif across the top, fading at the ends -->
+    <line x1="156" y1="120" x2="356" y2="120" stroke-width="9" opacity="0.5"/>
+    <!-- the thread of the rosary -->
+    <line x1="256" y1="150" x2="256" y2="392" stroke-width="8" opacity="0.85"/>
+  </g>
+
+  <!-- crown bead (larger, the source of the line) -->
+  <circle cx="256" cy="168" r="40" fill="#e6b94f"/>
+  <circle cx="256" cy="168" r="40" fill="none" stroke="#7a3a31" stroke-width="6" opacity="0.35"/>
+  <!-- inner dot, a small ground-colored eye for the crown bead -->
+  <circle cx="256" cy="168" r="13" fill="#7a3a31"/>
+
+  <!-- descending beads (graduated) -->
+  <circle cx="256" cy="252" r="26" fill="#e0a23c"/>
+  <circle cx="256" cy="322" r="22" fill="#e0a23c"/>
+  <circle cx="256" cy="384" r="18" fill="#e6b94f"/>
+
+  <!-- a faint parchment glow ring around the crown to evoke the wisdom crown -->
+  <circle cx="256" cy="168" r="60" fill="none" stroke="#f6f2e9" stroke-width="3" opacity="0.18"/>
+</svg>
