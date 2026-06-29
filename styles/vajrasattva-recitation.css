@@ -28,19 +28,9 @@
    it sits close under the tab bar (helps the whole recitation fit one screen). */
 #panel-recitation { padding-block: var(--space-2) var(--space-4); }
 
-/* counter */
-.vk-counter { display: flex; flex-direction: column; align-items: center; gap: .4rem; }
-.vk-num {
-  font-family: var(--vk-mono); font-weight: 700;
-  font-size: clamp(3.5rem, 12vw, 7rem); line-height: 1;
-  color: var(--vk-on); font-variant-numeric: tabular-nums;
-  text-shadow: 0 0 28px oklch(0.82 0.18 62 / 0.35);
-}
-.vk-label { font-family: var(--vk-mono); font-size: .72rem; letter-spacing: .18em;
-  text-transform: uppercase; opacity: .55; }
-.vk-track { width: min(420px, 80%); height: 2px; background: oklch(0.95 0.01 85 / 0.12);
-  border-radius: 2px; overflow: hidden; }
-.vk-fill { height: 100%; width: 0%; background: var(--vk-on); transition: width .18s linear; }
+/* countdown — a small white number trailing the final AH, inline with and the
+   same size as the syllable text (inherited from .vk-syllables). */
+.vk-count { color: var(--vk-neutral); font-variant-numeric: tabular-nums; margin-left: .25em; }
 
 /* syllables */
 .vk-syllables {
@@ -77,16 +67,13 @@
 .vk-speed input { accent-color: var(--vk-on); }
 
 @media (prefers-reduced-motion: reduce) {
-  .vk-syl, .vk-en, .vk-fill { transition: none; }
+  .vk-syl, .vk-en { transition: none; }
 }
 
 /* Compact on phones so the 100 syllables AND the translation fit one screen. */
 @media (max-width: 639px) {
   #panel-recitation { padding-block: .6rem var(--space-3); }
   .vk { gap: .5rem; padding: .8rem .7rem; }
-  .vk-counter { gap: .25rem; }
-  .vk-num { font-size: 1.9rem; }
-  .vk-label { font-size: .56rem; letter-spacing: .14em; }
   .vk-syllables { font-size: .85rem; line-height: 1.22; gap: .08em .45em; letter-spacing: .01em; }
   .vk-gloss { font-size: .68rem; line-height: 1.18; gap: .05rem; }
   .vk-controls { gap: .45rem; }

@@ -85,11 +85,9 @@ export function initVajraRecitation(mount, opts = {}) {
   mount.classList.add("vk");
   mount.innerHTML = "";
 
-  const counter = el("div", "vk-counter");
-  const num = el("div", "vk-num"); num.textContent = String(TOTAL);
-  const lab = el("div", "vk-label"); lab.textContent = "syllables remaining";
-  const track = el("div", "vk-track"); const fill = el("div", "vk-fill"); track.appendChild(fill);
-  counter.append(num, lab, track);
+  // Countdown: a small, white, inline number placed at the END of the syllable
+  // flow (after the final AH). No separate counter block, no label, no bar.
+  const num = el("span", "vk-count"); num.textContent = String(TOTAL);
 
   const sylWrap = el("div", "vk-syllables");
   MANTRA.forEach((ph) => {
@@ -101,6 +99,7 @@ export function initVajraRecitation(mount, opts = {}) {
     });
     sylWrap.appendChild(pEl);
   });
+  sylWrap.appendChild(num);   // the countdown trails the final AH, inline
 
   const glossWrap = el("div", "vk-gloss");
   phrases.forEach((p) => { const g = el("div", "vk-en"); g.textContent = p.en; glossWrap.appendChild(g); p.el = g; });
@@ -113,7 +112,7 @@ export function initVajraRecitation(mount, opts = {}) {
   spdWrap.appendChild(spd);
   ctl.append(btnPlay, btnReset, spdWrap);
 
-  mount.append(counter, sylWrap, glossWrap, ctl);
+  mount.append(sylWrap, glossWrap, ctl);
 
   // bind token elements (DOM built in same nested order as `tokens`)
   const sylEls = sylWrap.querySelectorAll(".vk-syl");
@@ -146,7 +145,6 @@ export function initVajraRecitation(mount, opts = {}) {
     const remaining = countRemaining(tokens, pos);
     if (remaining !== lastNum) {
       num.textContent = String(remaining); lastNum = remaining;
-      fill.style.width = (((TOTAL - remaining) / TOTAL) * 100).toFixed(1) + "%";
     }
     pglow.fill(0);
     for (let i = 0; i < TOTAL; i++) {

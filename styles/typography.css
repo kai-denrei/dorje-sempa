@@ -7,13 +7,13 @@
    item (pip install fonttools brotli; flavor='woff2'). Rendering is identical. */
 @font-face {
   font-family: 'Jomolhari';
-  src: url('/dorje-sempa/fonts/Jomolhari-Regular.ttf?v=1993c058') format('truetype');
+  src: url('/dorje-sempa/fonts/Jomolhari-Regular.ttf?v=0c73872a') format('truetype');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'Noto Serif Tibetan';
-  src: url('/dorje-sempa/fonts/NotoSerifTibetan-VF.ttf?v=1993c058') format('truetype');
+  src: url('/dorje-sempa/fonts/NotoSerifTibetan-VF.ttf?v=0c73872a') format('truetype');
   font-weight: 100 900;
   font-display: swap;
 }
