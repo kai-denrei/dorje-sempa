@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/dorje-sempa/styles/tokens.css?v=59a52746">
   <link rel="stylesheet" href="/dorje-sempa/styles/typography.css?v=59a52746">
   <link rel="stylesheet" href="/dorje-sempa/styles/main.css?v=59a52746">
+  <link rel="stylesheet" href="/dorje-sempa/styles/quiz.css?v=59a52746">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -51,6 +52,9 @@
         <button type="button" class="tab" role="tab" id="tab-practices"
                 aria-controls="panel-practices" aria-selected="false" tabindex="-1"
                 data-tab="practices">Practices</button>
+        <button type="button" class="tab" role="tab" id="tab-quiz"
+                aria-controls="panel-quiz" aria-selected="false" tabindex="-1"
+                data-tab="quiz">Quiz</button>
         <a class="tab tab-link" role="tab" id="tab-glossary"
            href="/dorje-sempa/glossary/" aria-selected="false" tabindex="-1"
            data-tab="glossary">Glossary</a>
@@ -426,7 +430,14 @@
       </div><!-- /practices lead -->
     </section><!-- /#panel-practices -->
 
-    <!-- Tab 5 — Glossary — is the /glossary/ route, reached via the header tab
+    <!-- ===================== TAB — QUIZ ============================= -->
+    <!-- Self-graded flip-card drill over the glossary. Built by src/quiz.js,
+         mounted on first show via the onTabShow hook in src/main.js. -->
+    <section id="panel-quiz" class="tab-panel container reading-panel"
+             role="tabpanel" aria-labelledby="tab-quiz" tabindex="0" hidden>
+    </section><!-- /#panel-quiz -->
+
+    <!-- Tab — Glossary — is the /glossary/ route, reached via the header tab
          link (no in-page panel). The former #glossary-cta is dropped: the tab
          replaces it. -->
 

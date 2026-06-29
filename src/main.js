@@ -15,6 +15,7 @@ import { loadTerms, mountTermCards, mountTermModal } from './terms.js';
 import { renderLineage, renderControversy, renderConceptMap, redrawConceptMap, watchResize } from './viz.js';
 import { mountTabs } from './tabs.js';
 import { mountPhowaWalk } from './phowa.js';
+import { mountQuiz } from './quiz.js';
 
 /* ---- D3 viz inside the Lineage & Controversy panel ----
    Drawn lazily: first when that tab is shown (so the panel has a real width),
@@ -63,6 +64,10 @@ function onTabShow(id) {
   } else if (id === 'lineage') {
     if (!lineageDrawn) { drawLineagePanelViz(); lineageDrawn = true; }
     else { drawLineagePanelViz(); }   // re-measure at current width on re-show
+  } else if (id === 'quiz') {
+    // Idempotent: builds the store + loads terms once, then re-renders the
+    // start screen (refreshing the known/review counts) on every show.
+    mountQuiz(document.getElementById('panel-quiz'));
   }
 }
 
