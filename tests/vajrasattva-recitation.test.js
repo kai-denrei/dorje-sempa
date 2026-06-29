@@ -1,60 +1,65 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MANTRA, flattenTokens, countRemaining } from '../src/vajrasattva-recitation.js';
+import { YIGGYA, RECITATIONS, flattenTokens, countRemaining } from '../src/vajrasattva-recitation.js';
 
-// Running token totals per phrase, transcribed from HANDOVER §3 (pre-verified).
-const PHRASE_CUMULATIVE = [1, 5, 13, 17, 22, 27, 33, 39, 46, 54, 61, 67, 68, 73, 76, 82, 88, 92, 99, 100];
+// Handover §10 acceptance: expected colorable-unit count per recitation.
+const EXPECTED_UNITS = {
+  vajrasattva: 100, mani: 6, vajraguru: 12, tara: 10, heart: 17, medicine: 23, mahakala: 8,
+};
 
-test('there are 20 phrases, each carrying an English gloss', () => {
-  assert.equal(MANTRA.length, 20);
-  for (const ph of MANTRA) assert.ok(typeof ph.en === 'string' && ph.en.length > 0);
+test('flattenTokens supports plain strings and [text, beats] pairs', () => {
+  const { tokens, totalBeats } = flattenTokens([
+    { en: 'x', words: [['A'], [['B', 2]], ['C']] },
+  ]);
+  assert.equal(tokens.length, 3);                 // 3 colorable units
+  assert.equal(totalBeats, 4);                    // 1 + 2 + 1
+  assert.deepEqual(tokens.map((t) => t.dur), [1, 2, 1]);
+  assert.deepEqual(tokens.map((t) => t.text), ['A', 'B', 'C']);
 });
 
-test('flattenTokens yields exactly 100 colorable units (acceptance check #1)', () => {
-  const { tokens } = flattenTokens(MANTRA);
+test('yig-gya is still 100 units and 102 beats (KAYO now [text, 2])', () => {
+  const { tokens, totalBeats } = flattenTokens(YIGGYA);
   assert.equal(tokens.length, 100);
-});
-
-test('total beats are 102 (the two KAYO each held 2 beats)', () => {
-  const { totalBeats } = flattenTokens(MANTRA);
   assert.equal(totalBeats, 102);
-});
-
-test('exactly two KAYO tokens, each spanning 2 beats', () => {
-  const { tokens } = flattenTokens(MANTRA);
   const kayo = tokens.filter((t) => t.text === 'KAYO');
   assert.equal(kayo.length, 2);
   for (const k of kayo) assert.equal(k.dur, 2);
 });
 
-test('token start/end are contiguous and monotonic', () => {
-  const { tokens } = flattenTokens(MANTRA);
-  let cursor = 0;
-  for (const t of tokens) {
-    assert.equal(t.start, cursor);
-    assert.equal(t.end, cursor + t.dur);
-    cursor = t.end;
+test('RECITATIONS has 7 entries with key/name/data/beatMs', () => {
+  assert.equal(RECITATIONS.length, 7);
+  for (const r of RECITATIONS) {
+    assert.ok(r.key && r.name && Array.isArray(r.data) && typeof r.beatMs === 'number');
   }
 });
 
-test('cumulative token count at each phrase boundary matches the handover table', () => {
-  const { tokens } = flattenTokens(MANTRA);
-  const cum = [];
-  let n = 0, phrase = 0;
-  for (let i = 0; i < tokens.length; i++) {
-    if (tokens[i].phrase !== phrase) { cum.push(n); phrase = tokens[i].phrase; }
-    n++;
+test('each recitation flattens to its expected unit count', () => {
+  for (const r of RECITATIONS) {
+    const { tokens } = flattenTokens(r.data);
+    assert.equal(tokens.length, EXPECTED_UNITS[r.key], `${r.key} unit count`);
   }
-  cum.push(n); // final phrase
-  assert.deepEqual(cum, PHRASE_CUMULATIVE);
 });
 
-test('countRemaining starts at 100, lands on 0, decrements one per syllable', () => {
-  const { tokens, totalBeats } = flattenTokens(MANTRA);
-  assert.equal(countRemaining(tokens, 0), 100);
-  assert.equal(countRemaining(tokens, totalBeats), 0);
-  // first token (OM) ends at beat 1 → one completed → 99 remaining
-  assert.equal(countRemaining(tokens, 1), 99);
-  // at beat 5: OM + BENZA·SATO = 5 units completed → 95 remaining
-  assert.equal(countRemaining(tokens, 5), 95);
+test('token start/end are contiguous for every recitation', () => {
+  for (const r of RECITATIONS) {
+    const { tokens } = flattenTokens(r.data);
+    let cursor = 0;
+    for (const t of tokens) { assert.equal(t.start, cursor); assert.equal(t.end, cursor + t.dur); cursor = t.end; }
+  }
+});
+
+test('only Mahākāla carries a restriction note', () => {
+  const withNote = RECITATIONS.filter((r) => r.note);
+  assert.equal(withNote.length, 1);
+  assert.equal(withNote[0].key, 'mahakala');
+  assert.match(withNote[0].note, /empowerment/i);
+});
+
+test('countRemaining starts full, lands on 0 (per recitation)', () => {
+  for (const r of RECITATIONS) {
+    const { tokens, totalBeats } = flattenTokens(r.data);
+    assert.equal(countRemaining(tokens, 0), tokens.length);
+    assert.equal(countRemaining(tokens, totalBeats), 0);
+    assert.equal(countRemaining(tokens, tokens[0].end), tokens.length - 1);
+  }
 });

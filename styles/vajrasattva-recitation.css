@@ -1,9 +1,7 @@
-/* Vajrasattva yig-gya recitation tab.
-   Adapted from the yig-gya handover §5. A deliberately DARK recitation surface
-   (the white→orange glow model needs a dark ground), kept dark in both site
-   colour-scheme modes. Everything is scoped under .vk so it cannot collide with
-   the parchment site. Fonts map to the site's serif token (no new web font); the
-   counter uses a system monospace stack. */
+/* Recitations tab — a dark recitation surface (the white→orange glow model needs
+   a dark ground), kept dark in both site colour-scheme modes and scoped under .vk
+   so nothing collides with the parchment site. Fonts map to the site's serif
+   token; the controls use a system monospace stack. */
 
 .vk {
   /* glow palette (tuned for the comet on a dark ground) */
@@ -13,24 +11,50 @@
   /* dark recitation ground (independent of the page's light/dark mode) */
   --vk-bg:    oklch(0.16 0.012 75);
   --vk-panel: oklch(0.20 0.014 75);
-  /* type — reuse the site serif; system mono for the counter (no new font load) */
+  /* type — reuse the site serif; system mono for controls/counter (no new font) */
   --vk-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
   --vk-serif: var(--font-latin-serif, "EB Garamond", "Cormorant", Georgia, serif);
 
-  display: flex; flex-direction: column; gap: 1.1rem;
-  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  display: flex; flex-direction: column; gap: 1rem;
+  padding: 1.25rem clamp(1rem, 4vw, 3rem);
   color: var(--vk-neutral);
   background: radial-gradient(120% 120% at 50% 0%, var(--vk-panel), var(--vk-bg));
   border-radius: 12px;
 }
 
-/* The dark widget frames itself, so trim the panel's section-rhythm top padding —
-   it sits close under the tab bar (helps the whole recitation fit one screen). */
+/* The dark widget frames itself, so trim the panel's section-rhythm top padding. */
 #panel-recitation { padding-block: var(--space-2) var(--space-4); }
 
-/* countdown — a small white number trailing the final AH, inline with and the
-   same size as the syllable text (inherited from .vk-syllables). */
-.vk-count { color: var(--vk-neutral); font-variant-numeric: tabular-nums; margin-left: .25em; }
+/* --- top control bar: text selector · play · restart · pace · rounds --- */
+.vk-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: .5rem; flex-wrap: wrap; font-family: var(--vk-mono);
+}
+.vk-btn {
+  background: transparent; color: var(--vk-neutral);
+  border: 1px solid oklch(0.82 0.18 62 / 0.4); border-radius: 6px;
+  font-family: var(--vk-mono); cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.vk-btn:hover { background: oklch(0.82 0.18 62 / 0.12); border-color: var(--vk-on); }
+.vk-icon {
+  width: 2rem; height: 2rem; min-width: 2rem; padding: 0;
+  display: inline-grid; place-items: center; font-size: .95rem; line-height: 1;
+}
+.vk-select, .vk-rounds {
+  font-family: var(--vk-mono); font-size: .72rem;
+  color: var(--vk-neutral); background: transparent;
+  border: 1px solid oklch(0.82 0.18 62 / 0.4); border-radius: 6px;
+  padding: .35rem .5rem; cursor: pointer;
+}
+.vk-select { max-width: 15rem; text-overflow: ellipsis; }
+.vk-rounds { min-width: 3.4rem; }
+.vk-select option, .vk-rounds option { color: #1a1a1a; }  /* native list readability */
+.vk-pace { accent-color: var(--vk-on); width: 4.5rem; }
+.vk-round { font-family: var(--vk-mono); font-size: .7rem; opacity: .65; font-variant-numeric: tabular-nums; }
+
+/* --- swappable body --- */
+.vk-body { display: flex; flex-direction: column; gap: 1rem; }
 
 /* syllables */
 .vk-syllables {
@@ -43,6 +67,10 @@
 .vk-word   { display: inline-flex; }            /* syllables in a word touch (BEN+ZA = BENZA) */
 .vk-syl    { transition: color .12s linear; will-change: color; }
 
+/* countdown — small white number trailing the final syllable, same size as the
+   syllable text (inherited from .vk-syllables). */
+.vk-count { color: var(--vk-neutral); font-variant-numeric: tabular-nums; margin-left: .25em; }
+
 /* english gloss */
 .vk-gloss {
   font-family: var(--vk-serif); font-style: italic;
@@ -54,28 +82,34 @@
 .vk-en { opacity: .32; transition: color .15s linear, opacity .15s linear; }
 .vk-en-on { letter-spacing: .01em; }
 
-/* controls */
-.vk-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
-  font-family: var(--vk-mono); }
-.vk-btn { background: transparent; color: var(--vk-neutral);
-  border: 1px solid oklch(0.82 0.18 62 / 0.4); border-radius: 6px;
-  padding: .5rem 1rem; font-family: var(--vk-mono); font-size: .8rem; cursor: pointer;
-  transition: background .15s, border-color .15s; }
-.vk-btn:hover { background: oklch(0.82 0.18 62 / 0.12); border-color: var(--vk-on); }
-.vk-speed { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; opacity: .7;
-  display: inline-flex; align-items: center; gap: .5rem; }
-.vk-speed input { accent-color: var(--vk-on); }
+/* per-recitation framing note (Mahākāla) + shared footnote */
+.vk-note {
+  font-family: var(--vk-serif); font-style: italic;
+  font-size: clamp(.78rem, 1.8vw, .95rem); line-height: 1.4;
+  color: var(--vk-neutral); opacity: .72;
+  max-width: 60ch; margin: .3rem auto 0; text-align: center;
+}
+.vk-foot {
+  font-family: var(--vk-mono); font-size: .62rem; letter-spacing: .02em; line-height: 1.4;
+  opacity: .4; max-width: 62ch; margin: .1rem auto 0; text-align: center;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .vk-syl, .vk-en { transition: none; }
 }
 
-/* Compact on phones so the 100 syllables AND the translation fit one screen. */
+/* Compact on phones so the syllables, translation and notes fit one screen. */
 @media (max-width: 639px) {
   #panel-recitation { padding-block: .6rem var(--space-3); }
-  .vk { gap: .5rem; padding: .8rem .7rem; }
+  .vk { gap: .6rem; padding: .8rem .7rem; }
+  .vk-controls { gap: .4rem; }
+  .vk-icon { width: 1.8rem; height: 1.8rem; min-width: 1.8rem; font-size: .85rem; }
+  .vk-select { font-size: .66rem; max-width: 9.5rem; padding: .3rem .4rem; }
+  .vk-rounds { font-size: .66rem; min-width: 3rem; }
+  .vk-pace { width: 3.4rem; }
+  .vk-body { gap: .6rem; }
   .vk-syllables { font-size: .85rem; line-height: 1.22; gap: .08em .45em; letter-spacing: .01em; }
   .vk-gloss { font-size: .68rem; line-height: 1.18; gap: .05rem; }
-  .vk-controls { gap: .45rem; }
-  .vk-btn { padding: .35rem .7rem; font-size: .7rem; }
+  .vk-note { font-size: .7rem; }
+  .vk-foot { font-size: .56rem; }
 }
