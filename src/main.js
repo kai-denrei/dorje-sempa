@@ -16,6 +16,7 @@ import { renderLineage, renderControversy, renderConceptMap, redrawConceptMap, w
 import { mountTabs } from './tabs.js';
 import { mountPhowaWalk } from './phowa.js';
 import { mountQuiz } from './quiz.js';
+import { mountKaraoke, getKaraoke } from './vajrasattva-karaoke.js';
 
 /* ---- D3 viz inside the Lineage & Controversy panel ----
    Drawn lazily: first when that tab is shown (so the panel has a real width),
@@ -68,7 +69,15 @@ function onTabShow(id) {
     // Idempotent: builds the store + loads terms once, then re-renders the
     // start screen (refreshing the known/review counts) on every show.
     mountQuiz(document.getElementById('panel-quiz'));
+  } else if (id === 'recitation') {
+    // Mount once into #vk-mount; reset to 100 (ready, not autoplaying — the
+    // recitation is intentional, the user presses Play).
+    const k = mountKaraoke();
+    if (k) k.reset();
   }
+  // Stop the karaoke rAF loop whenever we leave its tab (the panel goes
+  // [hidden] = display:none; a running loop would burn cycles and desync).
+  if (id !== 'recitation') { const k = getKaraoke(); if (k) k.pause(); }
 }
 
 async function init() {

@@ -1,0 +1,76 @@
+/* Vajrasattva yig-gya karaoke — recitation tab.
+   Adapted from HANDOVER_yiggya_karaoke §5. A deliberately DARK recitation surface
+   (the white→orange glow model needs a dark ground), kept dark in both site
+   colour-scheme modes. Everything is scoped under .vk so it cannot collide with
+   the parchment site. Fonts map to the site's serif token (no new web font); the
+   counter uses a system monospace stack. */
+
+.vk {
+  /* glow palette (tuned for the comet on a dark ground) */
+  --vk-neutral: oklch(0.95 0.012 85);   /* unsung */
+  --vk-fade:    oklch(0.58 0.150 52);   /* darker orange — the fading tail */
+  --vk-on:      oklch(0.82 0.180 62);   /* bright orange — currently sung */
+  /* dark recitation ground (independent of the page's light/dark mode) */
+  --vk-bg:    oklch(0.16 0.012 75);
+  --vk-panel: oklch(0.20 0.014 75);
+  /* type — reuse the site serif; system mono for the counter (no new font load) */
+  --vk-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, monospace;
+  --vk-serif: var(--font-latin-serif, "EB Garamond", "Cormorant", Georgia, serif);
+
+  display: flex; flex-direction: column; gap: 1.6rem;
+  padding: 2rem clamp(1rem, 4vw, 3rem);
+  color: var(--vk-neutral);
+  background: radial-gradient(120% 120% at 50% 0%, var(--vk-panel), var(--vk-bg));
+  border-radius: 12px;
+}
+
+/* counter */
+.vk-counter { display: flex; flex-direction: column; align-items: center; gap: .4rem; }
+.vk-num {
+  font-family: var(--vk-mono); font-weight: 700;
+  font-size: clamp(3.5rem, 12vw, 7rem); line-height: 1;
+  color: var(--vk-on); font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 28px oklch(0.82 0.18 62 / 0.35);
+}
+.vk-label { font-family: var(--vk-mono); font-size: .72rem; letter-spacing: .18em;
+  text-transform: uppercase; opacity: .55; }
+.vk-track { width: min(420px, 80%); height: 2px; background: oklch(0.95 0.01 85 / 0.12);
+  border-radius: 2px; overflow: hidden; }
+.vk-fill { height: 100%; width: 0%; background: var(--vk-on); transition: width .18s linear; }
+
+/* syllables */
+.vk-syllables {
+  font-family: var(--vk-serif);
+  font-size: clamp(1.25rem, 3.2vw, 2rem);
+  line-height: 1.9; letter-spacing: .04em; text-align: center;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: .35em 1.1em;
+}
+.vk-phrase { display: inline-flex; flex-wrap: wrap; gap: 0 .55em; }
+.vk-word   { display: inline-flex; }            /* syllables in a word touch (BEN+ZA = BENZA) */
+.vk-syl    { transition: color .12s linear; will-change: color; }
+
+/* english gloss */
+.vk-gloss {
+  font-family: var(--vk-serif); font-style: italic;
+  font-size: clamp(.95rem, 2.2vw, 1.15rem);
+  display: flex; flex-direction: column; gap: .3rem;
+  max-width: 60ch; margin: 0 auto; text-align: center;
+}
+.vk-en { opacity: .32; transition: color .15s linear, opacity .15s linear; }
+.vk-en-on { letter-spacing: .01em; }
+
+/* controls */
+.vk-controls { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  font-family: var(--vk-mono); }
+.vk-btn { background: transparent; color: var(--vk-neutral);
+  border: 1px solid oklch(0.82 0.18 62 / 0.4); border-radius: 6px;
+  padding: .5rem 1rem; font-family: var(--vk-mono); font-size: .8rem; cursor: pointer;
+  transition: background .15s, border-color .15s; }
+.vk-btn:hover { background: oklch(0.82 0.18 62 / 0.12); border-color: var(--vk-on); }
+.vk-speed { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; opacity: .7;
+  display: inline-flex; align-items: center; gap: .5rem; }
+.vk-speed input { accent-color: var(--vk-on); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vk-syl, .vk-en, .vk-fill { transition: none; }
+}
