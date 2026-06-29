@@ -1,0 +1,171 @@
+/* Quiz tab styles. Built entirely from existing design tokens so the quiz reads
+   as part of the same thangka/manuscript system. Grade buttons map to the
+   semantic triad: again→--warn (red), effort→--saffron (gold), known→--ok (green),
+   each with a text label and a key hint so color is never the only signal. */
+
+.quiz-start,
+.quiz-session,
+.quiz-summary {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+/* --- Category filter chips --- */
+.quiz-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: var(--space-2) 0;
+}
+.quiz-chip {
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-sm);
+  padding: 0.4rem 0.85rem;
+  min-height: 44px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.quiz-chip[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--maroon) 14%, var(--paper));
+  border-color: var(--maroon);
+  color: var(--maroon);
+}
+
+/* --- Actions / buttons --- */
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: var(--space-2) 0;
+}
+.quiz-btn {
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-md);
+  padding: 0.7rem 1.25rem;
+  min-height: 44px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--paper-sink);
+  color: var(--ink);
+  cursor: pointer;
+}
+.quiz-btn--primary {
+  background: var(--maroon);
+  border-color: var(--maroon);
+  color: var(--paper);
+}
+.quiz-known {
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-sm);
+  color: var(--ink-soft);
+  margin-top: var(--space-2);
+}
+
+/* --- Session + card --- */
+.quiz-progress {
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-sm);
+  color: var(--ink-soft);
+  text-align: center;
+  margin-bottom: var(--space-2);
+}
+.quiz-card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--paper-sink);
+  padding: var(--space-3);
+  text-align: center;
+}
+.quiz-face { display: block; }
+.quiz-front .tib-display { display: block; margin-bottom: 0.5rem; }
+.quiz-front .quiz-head {
+  font-family: var(--font-latin-serif);
+  font-size: var(--step-xl);
+  color: var(--maroon);
+}
+.quiz-translit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: baseline;
+  margin-top: 0.25rem;
+}
+.quiz-cat {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-sm);
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--ink-soft);
+}
+.quiz-back {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--rule);
+}
+.quiz-gloss {
+  font-family: var(--font-latin-serif);
+  font-size: var(--step-lg);
+  line-height: 1.5;
+}
+.quiz-back-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+/* Reveal fade — only when motion is allowed (instant swap under reduced motion). */
+@media (prefers-reduced-motion: no-preference) {
+  .quiz-back:not([hidden]) { animation: quiz-fade 180ms ease-out; }
+  @keyframes quiz-fade { from { opacity: 0; } to { opacity: 1; } }
+}
+
+/* --- Controls + grade buttons --- */
+.quiz-controls { margin-top: var(--space-3); }
+.quiz-grades {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+.quiz-grade {
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-md);
+  padding: 0.6rem 1rem;
+  min-height: 44px;
+  border-radius: var(--radius);
+  border: 1px solid currentColor;
+  background: var(--paper);
+  cursor: pointer;
+}
+.quiz-grade-key {
+  display: inline-block;
+  min-width: 1.4em;
+  margin-right: 0.3em;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+.quiz-grade.q-again  { color: var(--warn); }
+.quiz-grade.q-effort { color: color-mix(in oklab, var(--saffron) 80%, var(--ink)); }
+.quiz-grade.q-known  { color: var(--ok); }
+.quiz-grade:hover { background: color-mix(in oklab, currentColor 10%, var(--paper)); }
+
+.quiz-quit {
+  display: block;
+  margin: var(--space-3) auto 0;
+  font-family: var(--font-latin-ui);
+  font-size: var(--step-sm);
+  padding: 0.5rem 1rem;
+  min-height: 44px;
+  background: transparent;
+  border: none;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  cursor: pointer;
+}
