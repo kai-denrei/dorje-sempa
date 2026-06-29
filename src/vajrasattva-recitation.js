@@ -1,7 +1,7 @@
-/* vajrasattva-karaoke.js
-   Yig-gya (100-syllable Vajrasattva / Dorje Sempa mantra) karaoke recitation.
+/* vajrasattva-recitation.js
+   Yig-gya (100-syllable Vajrasattva / Dorje Sempa mantra) recitation.
 
-   Adapted from HANDOVER_yiggya_karaoke for the Dorje Sempa site: the rAF engine,
+   Adapted from the yig-gya handover for the Dorje Sempa site: the rAF engine,
    glow envelope, color model and verified 100-unit data are preserved verbatim;
    the integration is changed to match this site — mounted on tab-show via
    src/main.js (the ARIA-tab onShow hook), NOT auto-initialised on load, and no
@@ -13,9 +13,9 @@
      MANTRA                         the verified phrase/word/syllable data
      flattenTokens(mantra)          pure → { tokens, totalBeats }
      countRemaining(tokens, pos)    pure → colorable units not yet completed
-     initVajraKaraoke(mount, opts)  build the widget → { play, pause, reset, destroy }
-     mountKaraoke()                 idempotent: init once into #vk-mount → handle
-     getKaraoke()                   the live handle (or null) */
+     initVajraRecitation(mount, opts)  build the widget → { play, pause, reset, destroy }
+     mountRecitation()                 idempotent: init once into #vk-mount → handle
+     getRecitation()                   the live handle (or null) */
 
 export const MANTRA = [
   { en: "(seed sound)",                         words: [["OM"]] },
@@ -65,7 +65,7 @@ export function countRemaining(tokens, pos) {
   return Math.max(0, tokens.length - completed);
 }
 
-export function initVajraKaraoke(mount, opts = {}) {
+export function initVajraRecitation(mount, opts = {}) {
   const cfg = {
     beatMs:   300,   // ms per syllable at speed 1 (100 units ≈ 30s, +KAYO holds)
     attack:   0.35,  // beats of glow rise before a syllable's onset
@@ -210,10 +210,10 @@ export function initVajraKaraoke(mount, opts = {}) {
 
 // ---- site integration: mount once on first tab-show (called from src/main.js) ----
 let _handle = null;
-export function mountKaraoke() {
+export function mountRecitation() {
   const mount = document.getElementById("vk-mount");
   if (!mount) return null;
-  if (!_handle) _handle = initVajraKaraoke(mount);
+  if (!_handle) _handle = initVajraRecitation(mount);
   return _handle;
 }
-export function getKaraoke() { return _handle; }
+export function getRecitation() { return _handle; }

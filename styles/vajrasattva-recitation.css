@@ -1,5 +1,5 @@
-/* Vajrasattva yig-gya karaoke — recitation tab.
-   Adapted from HANDOVER_yiggya_karaoke §5. A deliberately DARK recitation surface
+/* Vajrasattva yig-gya recitation tab.
+   Adapted from the yig-gya handover §5. A deliberately DARK recitation surface
    (the white→orange glow model needs a dark ground), kept dark in both site
    colour-scheme modes. Everything is scoped under .vk so it cannot collide with
    the parchment site. Fonts map to the site's serif token (no new web font); the

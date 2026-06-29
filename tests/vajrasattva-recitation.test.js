@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MANTRA, flattenTokens, countRemaining } from '../src/vajrasattva-karaoke.js';
+import { MANTRA, flattenTokens, countRemaining } from '../src/vajrasattva-recitation.js';
 
 // Running token totals per phrase, transcribed from HANDOVER §3 (pre-verified).
 const PHRASE_CUMULATIVE = [1, 5, 13, 17, 22, 27, 33, 39, 46, 54, 61, 67, 68, 73, 76, 82, 88, 92, 99, 100];
