@@ -113,7 +113,10 @@ section:first-of-type { border-top: 0; }
    rhythm rule (`section { padding-block: var(--space-5) }`, 5rem) was leaving a
    large dead gap between the sticky tab nav and the eyebrow/title; this override
    tightens the TOP padding to ~none while keeping generous space BELOW the map. */
-#panel-the-path.is-landing {
+/* :not([hidden]) keeps this ID-specificity rule from overriding the
+   `.tab-panel[hidden] { display:none }` hide — otherwise the landing panel (and
+   its concept map) would stay displayed on every other tab. */
+#panel-the-path.is-landing:not([hidden]) {
   border-top: 0;
   padding-block: var(--space-1) var(--space-5);
   min-height: 78vh;                 /* comfortably owns the first screen */
